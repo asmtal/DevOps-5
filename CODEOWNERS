@@ -1,0 +1,9 @@
+ci-as-code/* @gajendran
+deploy-as-code/helm/.sops.yaml @gajendran
+deploy-as-code/deployer/* @gajendran
+
+##Internal Env####
+deploy-as-code/helm/environments/qa*.yaml @somebody-a
+deploy-as-code/helm/environments/uat*.yaml @somebody-b
+deploy-as-code/helm/environments/staging*.yaml @somebody-c
+deploy-as-code/helm/environments/dev*.yaml @somebody-d
