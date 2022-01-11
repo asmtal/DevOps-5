@@ -1,5 +1,5 @@
 global:
-  domain: builds.digit.org
+  domain: builds.kaleyra.com
 cluster-configs:
   namespaces:
     create: false
@@ -21,82 +21,27 @@ jenkins:
     enabled: true
     acl:
       admin:
-        - egovernments*micro-service-devops
+        - kaleyra*micro-service-devops
       user:
-        - egovernments*micro-service-dev
-        - egovernments*ukd-uat
-        - egovernments*bihar-uat
-        - egovernments*tarranto-dev
-        - egovernments*tarrento-ws-dev-team
-        - egovernments*egov-web-app
-        - egovernments*wt-ws-dev-team
-        - egovernments*Devops-partner
-        - egovernments*micro-service-qa
-        - egovernments*micro-service-uat
-        - egovernments*pb-uat
-        - egovernments*up-team
-        - egovernments*nugp-team
-        - egovernments*ifix-team
-        - egovernments*mgramseva-team
+        - kaleyra*micro-service-dev
+        - kaleyra*micro-service-qa
+        - kaleyra*micro-service-uat
+        - kaleyra*PROD
 
   jobBuilder:
     repos: >-
-      'git@github.com:egovernments/core-services.git','git@github.com:egovernments/business-services.git','git@github.com:egovernments/municipal-services.git','git@github.com:egovernments/utilities.git','git@github.com:egovernments/frontend.git','git@github.com:egovernments/DIGIT-Dev.git', 'git@github.com:egovernments/eGov-Punjab-Implementation.git', 'git@github.com:egovernments/covid-backend.git','git@github.com:egovernments/requester-dashboard.git','git@github.com:egovernments/approver-dashboard.git','git@github.com:egovernments/eGov-wordpress.git','git@github.com:egovernments/ukd-rainmaker-customization.git','git@github.com:egovernments/punjab-rainmaker-customization.git', 'git@github.com:egovernments/egov-coexistence.git', 'git@github.com:misdwss/iFix-Dev.git', 'git@github.com:egovernments/eGov-UP-Implementation.git', 'git@github.com:egovernments/test-automation.git', 'git@github.com:egovernments/CoronaSafe.git', 'git@github.com:misdwss/punjab-mgramseva.git', 'git@github.com:egovernments/egov-dcr-client.git', 'git@github.com:egovernments/eGov-dcr-service.git', 'git@github.com:eNagarsewaU/DIGIT-UKD.git', 'git@github.com:nugp-digit/DIGIT-NUGP.git', 'git@github.com:egovernments/digit-ui.git'
+      'git@github.com:kaleyra/core-platform.git','git@github.com:kaleyra/voice.git'
   deploymentJobs:
     - name: dev
-      acl: [egovernments*micro-service-dev]
-    - name: pb-prod
-      acl: [egovernments*PB-PROD]
-    - name: bihar-prod
-      acl: [egovernments*bihar-prod]
-    - name: bihar-dev
-      acl: [egovernments*bihar-dev]
-    - name: bihar-uat
-      acl: [egovernments*bihar-uat]
-    - name: epass-uat
-      acl: [egovernments*epass]
-    - name: epass-micro-prod
-      acl: [egovernments*epass-micro-prod]
-    - name: pb-qa
-      acl: [egovernments*pb-uat]  
-    - name: pb-uat
-      acl: [egovernments*pb-uat]   
+      acl: [kaleyra*micro-service-dev]
+    - name: prod
+      acl: [kaleyra*PROD]  
     - name: qa
-      acl: [egovernments*micro-service-qa] 
+      acl: [kaleyra*micro-service-qa] 
     - name: uat
-      acl: [egovernments*micro-service-uat] 
-    - name: ukd-dev
-      acl: [egovernments*ukd-dev] 
-    - name: ukd-prod-sdc
-      acl: [egovernments*ukd-prod] 
-    - name: ukd-sdc-uat
-      acl: [egovernments*ukd-uat]    
-    - name: pb-uat-v2
-      acl: [egovernments*pb-uat]     
-    - name: pb-prod-v2
-      acl: [egovernments*PB-PROD]             
+      acl: [kaleyra*micro-service-uat]              
     - name: ci
-      acl: [egovernments*micro-service-devops]      
-    - name: ukd-dev-sdc
-      acl: [egovernments*ukd-dev]
-    - name: staging
-      acl: [egovernments*staging-qa] 
-    - name: nugp-demo
-      acl: [egovernments*nugp-team] 
-    - name: central-instance
-      acl: [egovernments*micro-service-dev,egovernments*micro-service-qa]
-    - name: statea
-      acl: [egovernments*micro-service-dev,egovernments*micro-service-qa]
-    - name: stateb
-      acl: [egovernments*micro-service-dev,egovernments*micro-service-qa]    
-    - name: mgramseva-dev
-      acl: [egovernments*micro-service-dev,egovernments*mgramseva-team]
-    - name: mgramseva-qa
-      acl: [egovernments*micro-service-dev,egovernments*mgramseva-team]  
-    - name: ifix-dev
-      acl: [egovernments*micro-service-dev,egovernments*ifix-team]
-    - name: ifix-qa
-      acl: [egovernments*ifix-team]
+      acl: [kaleyra*micro-service-devops]      
        
   master:
     ingress:
@@ -122,16 +67,16 @@ nginx-ingress:
 
 cert-manager:
   namespace: jenkins
-  email: "devops-team@egov.org.in"
+  email: "devops-team@kaleyra.com"
 
 cluster-autoscaler:
   namespace: jenkins
   cloudProvider: aws  
   awsRegion: ap-south-1
   autoDiscovery:
-    clusterName: egov-cicd
+    clusterName: kaleyra-cicd
     tags:
-    - kubernetes.io/cluster/egov-cicd
+    - kubernetes.io/cluster/kaleyra-cicd
 
 postgres:
   namespace: jenkins

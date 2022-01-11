@@ -9,7 +9,7 @@ metadata:
 spec:
   containers:
   - name: deployer
-    image: gajentechm/deployer:3-master-931c51ff
+    image: gajendranegov/new-deployer:1
     command:
     - cat
     tty: true
