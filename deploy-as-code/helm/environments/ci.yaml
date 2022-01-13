@@ -1,5 +1,5 @@
 global:
-  domain: builds.kaleyra.com
+  domain: builds.techminds.dev
 cluster-configs:
   namespaces:
     create: false
@@ -15,7 +15,7 @@ jenkins:
   persistence:
     enabled: true
     aws:
-      - volumeId: "vol-060d0b69accaf98d0"
+      - volumeId: "vol-0c0ecf486a5e3da50"
         zone: ap-south-1b
   oauth:
     enabled: true
@@ -30,7 +30,7 @@ jenkins:
 
   jobBuilder:
     repos: >-
-      'git@github.com:kaleyra/core-platform.git','git@github.com:kaleyra/voice.git'
+      'git@github.com:kaleyra/core-platform.git'
   deploymentJobs:
     - name: dev
       acl: [kaleyra*micro-service-dev]
@@ -74,9 +74,9 @@ cluster-autoscaler:
   cloudProvider: aws  
   awsRegion: ap-south-1
   autoDiscovery:
-    clusterName: kaleyra-cicd
+    clusterName: cicd
     tags:
-    - kubernetes.io/cluster/kaleyra-cicd
+    - kubernetes.io/cluster/cicd
 
 postgres:
   namespace: jenkins
