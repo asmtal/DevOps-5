@@ -1,11 +1,10 @@
 terraform {
   backend "s3" {
-    bucket = "cicd-terraform-state-store"
+    bucket = "test-cicd-state"
     key = "terraform"
     region = "ap-south-1"
   }
 }
-
 module "network" {
   source             = "../../modules/kubernetes/aws/network"
   vpc_cidr_block     = "${var.vpc_cidr_block}"
@@ -15,36 +14,30 @@ module "network" {
 
 module "iam_user_deployer" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-user"
-
   name          = "${var.cluster_name}-kube-deployer"
   force_destroy = true  
   create_iam_user_login_profile = false
   create_iam_access_key         = true
-
   # User "egovterraform" has uploaded his public key here - https://keybase.io/egovterraform/pgp_keys.asc
   pgp_key = "${var.iam_keybase_user}"
 }
 
 module "iam_user_admin" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-user"
-
   name          = "${var.cluster_name}-kube-admin"
   force_destroy = true  
   create_iam_user_login_profile = false
   create_iam_access_key         = true
-
   # User "egovterraform" has uploaded his public key here - https://keybase.io/egovterraform/pgp_keys.asc
   pgp_key = "${var.iam_keybase_user}"
 }
 
 module "iam_user_user" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-user"
-
   name          = "${var.cluster_name}-kube-user"
   force_destroy = true  
   create_iam_user_login_profile = false
   create_iam_access_key         = true
-
   # User "test" has uploaded his public key here - https://keybase.io/test/pgp_keys.asc
   pgp_key = "${var.iam_keybase_user}"
 }
@@ -66,9 +59,10 @@ provider "kubernetes" {
 
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
+  vpc_id = "${module.network.vpc_id}"
   cluster_name    = "${var.cluster_name}"
   cluster_version = "${var.kubernetes_version}"
-  subnets         = "${concat(module.network.private_subnets, module.network.public_subnets)}"
+  subnet_ids         = "${concat(module.network.private_subnets, module.network.public_subnets)}"
 
   tags = "${
     map(
@@ -77,50 +71,32 @@ module "eks" {
     )
   }"
 
-  vpc_id = "${module.network.vpc_id}"
-
-  worker_groups_launch_template = [
-    {
-      name                    = "spot"
-      subnets                 = "${slice(module.network.private_subnets, 0, length(var.availability_zones))}"
-      override_instance_types = "${var.override_instance_types}"
-      asg_max_size            = "${var.number_of_worker_nodes}"
-      asg_desired_capacity    = "${var.number_of_worker_nodes}"
-      kubelet_extra_args      = "--node-labels=node.kubernetes.io/lifecycle=spot"
-      spot_allocation_strategy= "lowest-price"
-      spot_max_price          = "${var.spot_max_price}"
-      spot_instance_pools     = 1
-      cpu_credits             = "standard"
-    },
-  ]
-  
-  map_users    = [
-    {
-      userarn  = "${module.iam_user_deployer.this_iam_user_arn}"
-      username = "${module.iam_user_deployer.this_iam_user_name}"
-      groups   = ["system:masters"]
-    },
-    {
-      userarn  = "${module.iam_user_admin.this_iam_user_arn}"
-      username = "${module.iam_user_admin.this_iam_user_name}"
-      groups   = ["global-readonly", "digit-user"]
-    },
-    {
-      userarn  = "${module.iam_user_user.this_iam_user_arn}"
-      username = "${module.iam_user_user.this_iam_user_name}"
-      groups   = ["global-readonly"]
-    },    
-  ]
+  eks_managed_node_groups = {
+    "${var.cluster_name}" = {
+      min_size     = 1
+      max_size     = "${var.number_of_worker_nodes}"
+      desired_size = "${var.number_of_worker_nodes}"
+      node_group_name = "${var.cluster_name}"
+      instance_types = "${var.override_instance_types}"
+      capacity_type  = "SPOT"
+      subnet_ids = "${slice(module.network.private_subnets, 0, length(var.availability_zones))}"
+      labels = {
+        Environment = "${var.cluster_name}"
+      }
+      tags = {
+        ExtraTag = "${var.cluster_name}"
+      }
+    }
+  }
 }
 
 module "jenkins" {
-
   source = "../../modules/storage/aws"
   storage_count = 1
   environment = "${var.cluster_name}"
   disk_prefix = "jenkins-home"
   availability_zones = "${var.availability_zones}"
   storage_sku = "gp2"
-  disk_size_gb = "20"
+  disk_size_gb = "30"
   
 }
