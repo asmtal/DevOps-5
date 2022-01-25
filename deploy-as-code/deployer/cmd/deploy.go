@@ -17,7 +17,8 @@ package cmd
 
 import (
 	"errors"
-	"github.com/egovernments/DIGIT-DevOps/deploy-as-code/egov-deployer/pkg/cmd/egov-deployer"
+
+	"github.com/TechMindsDev/DevOps/tree/master/deploy-as-code/deployer/pkg/cmd/deployer/pkg/cmd/deployer"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -26,7 +27,7 @@ var options deployer.Options
 
 // deployCmd represents the deploy command
 var deployCmd = &cobra.Command{
-	Use:   "deploy [IMAGES]",
+	Use:   "deploy -e <env> -s [product] -v [version] -m [module,module] -i [Image,Image] -c [true/false] -p [true/false]",
 	Short: "Deploy a comma separated list of images",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -36,10 +37,13 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 
 	PreRunE: func(cmd *cobra.Command, args []string) error {
-		if len(args) < 1 {
-			return errors.New("At least require one image to deploy")
+		if options.DesiredProduct == "" && len(args) < 1 {
+			return errors.New("Image Deploy: At least require one product version/module to deploy")
 		}
-		options.Images = args[0]
+
+		if options.DesiredProduct == "" && len(args) >= 1 {
+			options.Images = args[0]
+		}
 
 		return nil
 	},
@@ -52,25 +56,17 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	// deployCmd.Flags().StringVarP(&images, "images", "i", "", "Images to be deployed")
-
 	deployCmd.Flags().String("helm-dir", "../helm", "Helm Charts / Configs directory")
 	viper.BindPFlag("helm-dir", deployCmd.Flags().Lookup("helm-dir"))
 
+	deployCmd.Flags().StringVarP(&options.DesiredProduct, "product", "s", "", "Desired Product stack")
+	deployCmd.Flags().StringVarP(&options.ProductVersion, "version", "v", "", "Intented product version to be applied")
 	deployCmd.Flags().StringVarP(&options.Environment, "environment", "e", "", "Environment override to be applied")
+	deployCmd.Flags().StringVarP(&options.Images, "images", "i", "", "Comma seperated images to be deployed")
+	deployCmd.Flags().StringVarP(&options.SpecificModules, "modules", "m", "", "Comma seperated modules to be deployed")
 	deployCmd.Flags().BoolVarP(&options.ClusterConfigs, "cluster-configs", "c", false, "Deploy cluster configs")
 	deployCmd.Flags().BoolVarP(&options.Print, "print", "p", false, "Print templates to stdout")
-	// deployCmd.MarkFlagRequired("images")
+
 	deployCmd.MarkFlagRequired("environment")
 	rootCmd.AddCommand(deployCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// deployCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// deployCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

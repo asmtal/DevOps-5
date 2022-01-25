@@ -2,9 +2,9 @@
 # This is a YAML-formatted file.
 # Declare name/value pairs to be passed into your templates.
 global:
-    containerRegistry: egovio
+    containerRegistry: <> #should be ecr
 
-namespace: egov
+namespace: kaleyra
 replicas: 1
 httpPort: 8080
 appType: ""
@@ -40,7 +40,7 @@ initContainers:
         - name: "DB_URL"
           valueFrom: 
             configMapKeyRef: 
-              name: egov-config
+              name: kaleyra-config
               key: db-url
         - name: "SCHEMA_TABLE"
           value: {{ .Values.initContainers.dbMigration.schemaTable | quote }}              
@@ -57,7 +57,7 @@ initContainers:
         - name: "FLYWAY_LOCATIONS"
           valueFrom: 
             configMapKeyRef: 
-                name: egov-config
+                name: kaleyra-config
                 key: flyway-locations
 
   gitSync:
@@ -123,7 +123,7 @@ extraEnv:
       - name: SPRING_DATASOURCE_URL
         valueFrom:
           configMapKeyRef:
-            name: egov-config
+            name: kaleyra-config
             key: db-url
       - name: FLYWAY_ENABLED
         value: "false"      
@@ -134,12 +134,12 @@ extraEnv:
       - name: APP_TIMEZONE
         valueFrom:
           configMapKeyRef:
-            name: egov-config
+            name: kaleyra-config
             key: timezone              
       - name: FLYWAY_URL
         valueFrom:
           configMapKeyRef:
-            name: egov-config
+            name: kaleyra-config
             key: db-url
       - name: SPRING_DATASOURCE_USERNAME
         valueFrom:
@@ -154,7 +154,7 @@ extraEnv:
       - name: SPRING_DATASOURCE_TOMCAT_INITIAL_SIZE
         valueFrom:
           configMapKeyRef:
-            name: egov-config
+            name: kaleyra-config
             key: spring-datasource-tomcat-initialSize
       - name: SERVER_TOMCAT_MAX_THREADS
       {{- if index .Values "server-tomcat-max-threads" }} 
@@ -162,7 +162,7 @@ extraEnv:
       {{- else }}        
         valueFrom:
           configMapKeyRef:
-            name: egov-config
+            name: kaleyra-config
             key: server-tomcat-max-threads
       {{- end }}            
       - name: SERVER_TOMCAT_MAX_CONNECTIONS
@@ -171,7 +171,7 @@ extraEnv:
       {{- else }}        
         valueFrom:
           configMapKeyRef:
-            name: egov-config
+            name: kaleyra-config
             key: server-tomcat-max-connections
       {{- end }}                
       - name: SPRING_DATASOURCE_TOMCAT_MAX_ACTIVE
@@ -180,7 +180,7 @@ extraEnv:
       {{- else }} 
         valueFrom:
           configMapKeyRef:
-            name: egov-config
+            name: kaleyra-config
             key: spring-datasource-tomcat-max-active 
       {{- end }}       
       - name: SPRING_DATASOURCE_HIKARI_MAXIMUM-POOL-SIZE
@@ -189,23 +189,23 @@ extraEnv:
       {{- else }}
         valueFrom:
           configMapKeyRef:
-            name: egov-config
+            name: kaleyra-config
             key: spring-datasource-tomcat-max-active 
       {{- end }}           
       - name: KAFKA_CONFIG_BOOTSTRAP_SERVER_CONFIG
         valueFrom:
           configMapKeyRef:
-            name: egov-config
+            name: kaleyra-config
             key: kafka-brokers
       - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
         valueFrom:
           configMapKeyRef:
-            name: egov-config
+            name: kaleyra-config
             key: kafka-brokers
       - name: SPRING_JPA_SHOW_SQL
         valueFrom:
           configMapKeyRef:
-            name: egov-config
+            name: kaleyra-config
             key: spring-jpa-show-sql           
   jaeger: |             
       - name: JAEGER_SERVICE_NAME
@@ -253,7 +253,7 @@ serviceMonitor:
   # interval: 2m  
 
 cron:
-  namespace: egov
+  namespace: kaleyra
   concurrencyPolicy: Forbid
   restartPolicy: OnFailure
   httpPort: 8080

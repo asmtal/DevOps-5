@@ -65,10 +65,10 @@ module "eks" {
   subnet_ids         = "${concat(module.network.private_subnets, module.network.public_subnets)}"
 
   tags = "${
-    map(
-      "kubernetes.io/cluster/${var.cluster_name}", "owned",
-      "KubernetesCluster", "${var.cluster_name}"
-    )
+    tomap({
+      "kubernetes.io/cluster/${var.cluster_name}" = "owned",
+      "KubernetesCluster" = "${var.cluster_name}"
+    })
   }"
 
   eks_managed_node_groups = {

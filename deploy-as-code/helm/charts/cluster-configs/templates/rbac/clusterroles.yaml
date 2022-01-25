@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: digit-user
+  name: kaleyra-user
 rules:
 - apiGroups:
   - "extensions"
@@ -21,7 +21,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: digit-admin
+  name: kaleyra-admin
 rules:
 - apiGroups:
   - ""

@@ -1,5 +1,5 @@
 global:
-  domain: builds.techminds.dev
+  domain: cicd.kaleyra.com
 cluster-configs:
   namespaces:
     create: false
@@ -15,33 +15,50 @@ jenkins:
   persistence:
     enabled: true
     aws:
-      - volumeId: "vol-0c0ecf486a5e3da50"
+      - volumeId: "vol-01a9fc5693cddbf39"
         zone: ap-south-1b
   oauth:
     enabled: true
     acl:
       admin:
-        - kaleyra*micro-service-devops
+        - kaleyra*core-devops
       user:
-        - kaleyra*micro-service-dev
-        - kaleyra*micro-service-qa
-        - kaleyra*micro-service-uat
+        - kaleyra*core-dev
+        - kaleyra*core-stage
+        - kaleyra*core-preprod
+        - kaleyra*core-prod
+        - kaleyra*sms-dev
+        - kaleyra*sms-stage
+        - kaleyra*sms-preprod
+        - kaleyra*sms-prod        
+        - kaleyra*cap-dev
+        - kaleyra*cap-stage
+        - kaleyra*cap-preprod
+        - kaleyra*voice-dev
+        - kaleyra*voice-stage
+        - kaleyra*voice-preprod
+        - kaleyra*whatsapp-dev
+        - kaleyra*whatsapp-stage
+        - kaleyra*whatsapp-preprod
+        - kaleyra*campaign-dev
+        - kaleyra*campaign-stage
+        - kaleyra*campaign-preprod
         - kaleyra*PROD
 
   jobBuilder:
     repos: >-
-      'git@github.com:kaleyra/core-platform.git'
+      'git@bitbucket.org:kaleyra/core.git'
   deploymentJobs:
     - name: dev
-      acl: [kaleyra*micro-service-dev]
+      acl: [kaleyra*core-dev]
     - name: prod
       acl: [kaleyra*PROD]  
-    - name: qa
-      acl: [kaleyra*micro-service-qa] 
-    - name: uat
-      acl: [kaleyra*micro-service-uat]              
+    - name: stage
+      acl: [kaleyra*core-stage] 
+    - name: preprod
+      acl: [kaleyra*core-preprod]              
     - name: ci
-      acl: [kaleyra*micro-service-devops]      
+      acl: [kaleyra*core-devops]      
        
   master:
     ingress:
@@ -77,7 +94,3 @@ cluster-autoscaler:
     clusterName: cicd
     tags:
     - kubernetes.io/cluster/cicd
-
-postgres:
-  namespace: jenkins
-  postgresDatabase: ci_database

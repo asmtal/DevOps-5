@@ -11,10 +11,10 @@ resource "aws_vpc" "vpc" {
   enable_dns_hostnames = true
 
   tags = "${
-    map(
-      "Name", "${var.cluster_name}",
-      "kubernetes.io/cluster/${var.cluster_name}", "shared",
-    )
+    tomap({
+      "Name" = "${var.cluster_name}",
+      "kubernetes.io/cluster/${var.cluster_name}" = "shared",
+    })
   }"
 }
 

@@ -8,13 +8,13 @@ creation_rules:
           #gcp_kms: 
           #pgp:    
 
-        - path_regex: environments/qa\-secrets\.yaml$
+        - path_regex: environments/stag\-secrets\.yaml$
           #kms: 
           ##gcp_kms: 
           #pgp:   
 
         - path_regex: environments/uat\-secrets\.yaml$
-          #kms: 
+          #kms: arn:aws:kms:ap-south-1:167578521290:key/bb6bb418-6c1c-42c4-a2aa-dd2816eea300
           ##gcp_kms: 
           #pgp:    
        
@@ -24,23 +24,8 @@ creation_rules:
           #pgp:   
 
         # CI ------------------------------------------------------------------------------------------------------------- #
-        - path_regex: environments/ci\-secrets\.yaml$
-          kms: 'arn:aws:kms:ap-south-1:218381940040:key/9a3b0835-7713-4925-8b3d-da7e421d28d2'
-          #gcp_kms: 
-          #pgp:                
-
-
- 
-        # DEFAULT ------------------------------------------------------------------------------------------------------------- #
-        # Finally, if the rules above have not matched, this one is a
-        # catchall that will encrypt the file using KMS set C
-        # The absence of a path_regex means it will match everything
-        #- kms: 
-          ##gcp_kms: 
+        - path_regex: environments/ci\-secrets\.yaml$ 
           encrypted_regex: '^(secrets)$'
-          #pgp: 
+          #pgp: '39E63430006C6B4EAD11CC9BC52376224230FED9'
+          kms: arn:aws:kms:ap-south-1:167578521290:key/bb6bb418-6c1c-42c4-a2aa-dd2816eea300                
 
-        # - path_regex: environments/dev\.yaml$
-        #   encrypted_regex: '^(secrets)$'
-        ##   kms: 'arn:aws:kms:ap-south-1:218381940040:key/9a3b0835-7713-4925-8b3d-da7e421d28d2'
-        ##   pgp: 'C7ED80C79625B40667A6FAD6774DE10645AAD1BB'

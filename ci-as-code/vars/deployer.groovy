@@ -9,7 +9,7 @@ metadata:
 spec:
   containers:
   - name: deployer
-    image: gajendranegov/new-deployer:1
+    image: gajendran/new-deployer:1
     command:
     - cat
     tty: true
@@ -47,12 +47,10 @@ spec:
                 stage('Deploy Images') {
                         container(name: 'deployer', shell: '/bin/sh') {
                             sh """
-                                /opt/egov/deployer deploy --helm-dir `pwd`/${pipelineParams.helmDir} -c=${env.CLUSTER_CONFIGS}  -e ${pipelineParams.environment} "${env.IMAGES}"
+                                /opt/app/deployer deploy --helm-dir `pwd`/${pipelineParams.helmDir} -c=${env.CLUSTER_CONFIGS}  -e ${pipelineParams.environment} "${env.IMAGES}"
                             """
                             }
-                }
-        }
-    }
-
-
+                  }
+          }
+      }
 }
