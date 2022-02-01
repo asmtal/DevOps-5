@@ -149,12 +149,12 @@ master:
   #   - name: http_proxy
   #     value: "http://192.168.64.1:3128"
   containerEnv:
-    - name: GITHUB_CLIENT_ID
+    - name: BITBUCKET_CLIENT_ID
       valueFrom:
         secretKeyRef:
           name: jenkins-credentials
           key: clientID
-    - name: GITHUB_CLIENT_SECRET
+    - name: BITBUCKET_CLIENT_SECRET
       valueFrom:
         secretKeyRef:
           name: jenkins-credentials
@@ -320,7 +320,7 @@ master:
     #     <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps">
     #       <script>library &apos;ci-libs&apos;
 
-    #       jobBuilder(urls: [&apos;git@github.com:egovernments/utilities.git&apos;,&apos;git@github.com:egovernments/core-services.git&apos;,&apos;git@github.com:egovernments/business-services.git&apos;,&apos;git@github.com:egovernments/municipal-services.git&apos;,&apos;git@github.com:egovernments/frontend.git&apos;, &apos;git@github.com:egovernments/eGov-Punjab-Implementation.git&apos;, &apos;git@github.com:egovernments/eGov-dcr-service.git&apos;, &apos;git@github.com:egovernments/eGov-dcrclient-implementation.git&apos;, &apos;git@github.com:egovernments/covid-backend.git&apos;,&apos;git@github.com:egovernments/requester-dashboard.git&apos;,&apos;git@github.com:egovernments/approver-dashboard.git&apos;,&apos;git@github.com:egovernments/eGov-wordpress.git&apos;,&apos;git@github.com:egovernments/eGov-infraOps.git&apos;,&apos;git@github.com:egovernments/ukd-rainmaker-customization.git&apos;,&apos;git@github.com:egovernments/egov-smartcity-suite.git&apos;])</script>
+    #       jobBuilder(urls: [&apos;git@github.com:techmindsdev/utilities.git&apos;])</script>
     #       <sandbox>false</sandbox>
     #     </definition>
     #     <triggers/>
@@ -393,11 +393,11 @@ master:
         jenkins:
           securityRealm:
         {{- if .Values.oauth.enabled }}          
-            github:
-              githubWebUri: "https://github.com"
-              githubApiUri: "https://api.github.com"
-              clientID: "${GITHUB_CLIENT_ID}"
-              clientSecret: "${GITHUB_CLIENT_SECRET}"
+            bitbucket:
+              githubWebUri: "https://bitbucket.org"
+              githubApiUri: "https://api.bitbucket.org"
+              clientID: "${BITBUCKET_CLIENT_ID}"
+              clientSecret: "${BITBUCKET_CLIENT_SECRET}"
               oauthScopes: "read:org,user:email"   
         {{- else }}                
             legacy
@@ -815,7 +815,7 @@ persistence:
 
   # azure:
   #   - diskName: kafka-0
-  #     diskUri: /subscriptions/b4e1aa53-c521-44e6-8a4d-5ae107916b5b/resourceGroups/MC_egov-micro-dev_egov-micro-dev_southindia/providers/Microsoft.Compute/disks/kafka-0
+  #     diskUri: /subscriptions/b4e1aa53-c521-44e6-8a4d-5ae107916b5b/resourceGroups0
   #openstack:
   #  - f37a03aa-6212-4c62-a805-9ce139fab180
   
