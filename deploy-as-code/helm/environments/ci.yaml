@@ -2,7 +2,7 @@ global:
   domain: cicd.techminds.dev
 cluster-configs:
   namespaces:
-    create: false
+    create: true
     values: [ monitoring, jenkins ]
   root-ingress:
     namespace: jenkins
