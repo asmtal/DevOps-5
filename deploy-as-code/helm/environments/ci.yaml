@@ -14,6 +14,7 @@ cluster-configs:
 jenkins:
   persistence:
     enabled: true
+    size: "20Gi"
     aws:
       - volumeId: "vol-01a9fc5693cddbf39"
         zone: ap-south-1b
