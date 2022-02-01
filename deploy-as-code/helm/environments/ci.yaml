@@ -14,9 +14,9 @@ cluster-configs:
 jenkins:
   persistence:
     enabled: true
-    size: "20Gi"
+    size: "100Gi"
     aws:
-      - volumeId: "vol-01a9fc5693cddbf39"
+      - volumeId: "vol-06be02df64bd69c7b"
         zone: ap-south-1b
   oauth:
     enabled: true
@@ -26,38 +26,15 @@ jenkins:
       user:
         - kaleyra*core-dev
         - kaleyra*core-stage
-        - kaleyra*core-preprod
-        - kaleyra*core-prod
-        - kaleyra*sms-dev
-        - kaleyra*sms-stage
-        - kaleyra*sms-preprod
-        - kaleyra*sms-prod        
-        - kaleyra*cap-dev
-        - kaleyra*cap-stage
-        - kaleyra*cap-preprod
-        - kaleyra*voice-dev
-        - kaleyra*voice-stage
-        - kaleyra*voice-preprod
-        - kaleyra*whatsapp-dev
-        - kaleyra*whatsapp-stage
-        - kaleyra*whatsapp-preprod
-        - kaleyra*campaign-dev
-        - kaleyra*campaign-stage
-        - kaleyra*campaign-preprod
-        - kaleyra*PROD
 
   jobBuilder:
     repos: >-
       'git@bitbucket.org:kaleyra/core.git','git@bitbucket.org:kaleyra/campaign-management.git','git@bitbucket.org:kaleyra/cap.git','git@bitbucket.org:kaleyra/conversational-ai.git','git@bitbucket.org:kaleyra/email.git','git@bitbucket.org:kaleyra/sms.git','git@bitbucket.org:kaleyra/voice.git','git@bitbucket.org:kaleyra/whatsapp.git'
   deploymentJobs:
     - name: dev
-      acl: [kaleyra*core-dev]
-    - name: prod
-      acl: [kaleyra*PROD]  
+      acl: [kaleyra*core-dev] 
     - name: stage
-      acl: [kaleyra*core-stage] 
-    - name: preprod
-      acl: [kaleyra*core-preprod]              
+      acl: [kaleyra*core-stage]              
     - name: ci
       acl: [kaleyra*core-devops]      
        
