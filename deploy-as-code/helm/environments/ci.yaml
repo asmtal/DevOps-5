@@ -1,5 +1,5 @@
 global:
-  domain: cicd.kaleyra.com
+  domain: cicd.techminds.dev
 cluster-configs:
   namespaces:
     create: false
@@ -13,7 +13,7 @@ cluster-configs:
 
 jenkins:
   persistence:
-    enabled: true
+    enabled: false
     aws:
       - volumeId: "vol-01a9fc5693cddbf39"
         zone: ap-south-1b
@@ -47,7 +47,7 @@ jenkins:
 
   jobBuilder:
     repos: >-
-      'git@bitbucket.org:kaleyra/core.git'
+      'git@bitbucket.org:kaleyra/core.git', 'git@bitbucket.org:kaleyra/campaign-management.git', 'git@bitbucket.org:kaleyra/cap.git', 'git@bitbucket.org:kaleyra/conversational-ai.git', 'git@bitbucket.org:kaleyra/email.git', 'git@bitbucket.org:kaleyra/sms.git', 'git@bitbucket.org:kaleyra/voice.git', 'git@bitbucket.org:kaleyra/whatsapp.git'
   deploymentJobs:
     - name: dev
       acl: [kaleyra*core-dev]
@@ -79,12 +79,12 @@ nginx-ingress:
   ssl-ecdh-curve: "X25519:prime256v1:secp521r1:secp384r1"
   controller:
     image:
-      repository: egovio/nginx-ingress-controller
+      repository: gajentechm/nginx-ingress-controller
       tag: "0.26.1"
 
 cert-manager:
   namespace: jenkins
-  email: "devops-team@kaleyra.com"
+  email: "coe-devops@kaleyra.com"
 
 cluster-autoscaler:
   namespace: jenkins

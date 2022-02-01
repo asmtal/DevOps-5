@@ -1,0 +1,20 @@
+version: v2.5
+modules:
+    - name: ssl-core
+      services:
+        - nginx-ingress:v1rt-manager
+    - name: voice-web
+      dependencies:
+        - voice-core
+      services:
+        - redis 
+        - nginx-ingress
+        - cert-manager      
+    - name: core
+      dependencies:
+        - "backbone"
+        - "authn-authz"    
+      services:
+        - ecr/service1:v1.1.0-f9375a4
+        - ecr/service2-masters:408-14b79e9
+        - ecr/service3:7-uploader-demand-feature-44b0170

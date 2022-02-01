@@ -1,0 +1,21 @@
+version: v2.5
+modules:
+    - name: traffic-core
+      services:
+        - ce-v2:v1.1.0-f9375a4
+        - nginx-ingrss:v1rt-manager
+    - name: voice-web
+      dependencies:
+        - voice-core
+      services:
+        - redis
+        - nginx-ingress
+        - cert-manager      
+    - name: core
+      dependencies:
+        - "backbone"
+        - "authn-authz"    
+      services:
+        - ecr/service1:v1.2.0-f9375a4
+        - ecr/service2-masters:409-14b79e9
+        - ecr/service3:7-uploader-demand-feature-44b0170

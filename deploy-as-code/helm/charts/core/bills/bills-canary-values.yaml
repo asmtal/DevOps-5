@@ -1,0 +1,48 @@
+# Common Labels
+labels:
+  app: "bills"
+  group: "core"
+
+# Ingress Configs
+ingress:
+  enabled: true
+  context: "bills"
+  ip-whitelist: "0.0.0.0/0"
+  additionalAnnotations: | 
+    nginx.ingress.kubernetes.io/whitelist-source-range: {{ index .Values "ingress" "ip-whitelist" | quote }}
+
+# Init Containers Configs
+initContainers:
+  dbMigration:
+    enabled: true
+    schemaTable: "bills-db"
+    image:
+      repository: "bills-db"
+
+# Container Configs
+image:
+  repository: "bills:canary"
+replicas: "1"
+appType: "java-spring"
+tracing-enabled: true
+new-relic-enabled: false
+heap: "-Xmx192m -Xms192m"
+java-args: ""
+
+# Additional Container Envs
+env: |  
+  - name: KAFKA_BOOTSTRAP_SERVER
+    valueFrom:
+      configMapKeyRef:
+        name: kaleyra-config
+        key: kafka-brokers
+  - name: SPRING_FLYWAY_ENABLED
+    value: "false"
+  - name: KAFKA_TOPICS_PARTITION_COUNT
+    value: {{ index .Values "kafka-topics-partition-count" | quote }}
+  - name: KAFKA_TOPICS_REPLICATION_FACTOR
+    value: {{ index .Values "kafka-topics-replication-factor" | quote }}
+  {{- if index .Values "kafka-consumer-poll-ms" }}
+  - name: KAFKA_CONSUMER_POLL_MS
+    value: {{ index .Values "kafka-consumer-poll-ms" | quote }}
+  {{- end }}
