@@ -21,10 +21,9 @@ oauth:
     user: 
       - kaleyra*core-dev
 
-
 jobBuilder:
   repos: >-
-    'git@bitbucket.org:kaleyra/core.git', 'git@bitbucket.org:kaleyra/campaign-management.git', 'git@bitbucket.org:kaleyra/cap.git', 'git@bitbucket.org:kaleyra/conversational-ai.git', 'git@bitbucket.org:kaleyra/email.git', 'git@bitbucket.org:kaleyra/sms.git', 'git@bitbucket.org:kaleyra/voice.git', 'git@bitbucket.org:kaleyra/whatsapp.git'
+    'git@bitbucket.org:kaleyra/core.git','git@bitbucket.org:kaleyra/campaign-management.git','git@bitbucket.org:kaleyra/cap.git','git@bitbucket.org:kaleyra/conversational-ai.git','git@bitbucket.org:kaleyra/email.git','git@bitbucket.org:kaleyra/sms.git','git@bitbucket.org:kaleyra/voice.git','git@bitbucket.org:kaleyra/whatsapp.git'
 
 master:
   httpsKeyStore:
@@ -398,7 +397,7 @@ master:
               githubApiUri: "https://api.bitbucket.org"
               clientID: "${BITBUCKET_CLIENT_ID}"
               clientSecret: "${BITBUCKET_CLIENT_SECRET}"
-              oauthScopes: "read:org,user:email"   
+              oauthScopes: "read:org,user:email"    
         {{- else }}                
             legacy
         {{- end -}}            
@@ -422,7 +421,7 @@ master:
                       - "gitBranchDiscovery"
       system-message: | 
         jenkins:                                
-          systemMessage: "Welcome to Kaleyra CI CD server.  This Jenkins CasC is configured and managed as code."    
+          systemMessage: "Welcome to Kaleyra CI CD server.  This Jenkins is configured and managed as code."    
 
       git-credentials: | 
         credentials:
@@ -475,19 +474,19 @@ master:
                 keepDependencies(false)
                 parameters {
                   stringParam("Images", "", """1. Either Single Image or Comma Separated Images eg: bills:master-v1.15, bills-consumer:v1.16-asdd123 
-              2. To restart service(s) enter the service name eg: nginx-ingress, cert-manager""")
-                  booleanParam("Cluster_Configs", false, "Whenever you made changes to the deployment conifg ensure the cluster_config check is checked to pick the latest configs from the deployment")
+                              2. To restart service(s) enter the service name eg: nginx-ingress, cert-manager""")
+                    booleanParam("Cluster_Configs", false, "Whenever you made changes to the deployment conifg ensure the cluster_config check is checked to pick the latest configs from the deployment")
                 }
                 definition {
                   cps {
                       script("""library 'ci-libs'
-                      deployer(repo:'git@bitbucket.org:kaleyra/devops.git', branch: 'master', helmDir: 'deploy-as-code/helm', environment: '{{ $job.name }}')""")
+
+              deployer(repo:'git@bitbucket.org:kaleyra/devops.git', branch: 'master', helmDir: 'deploy-as-code/helm', environment: '{{ $job.name }}')""")
                       sandbox() 
                     }
                 }
                 disabled(false)
               }  
-              {{- end }}
    
           {{- end }}
 
@@ -815,7 +814,7 @@ persistence:
 
   # azure:
   #   - diskName: kafka-0
-  #     diskUri: /subscriptions/b4e1aa53-c521-44e6-8a4d-5ae107916b5b/resourceGroups0
+  #     diskUri: /subscriptions/b4e1aa53-c521-44e6-8a4d-5ae107916b5b/resourceGroups/MC_egov-micro-dev_egov-micro-dev_southindia/providers/Microsoft.Compute/disks/kafka-0
   #openstack:
   #  - f37a03aa-6212-4c62-a805-9ce139fab180
   
