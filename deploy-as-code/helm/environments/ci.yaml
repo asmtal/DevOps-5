@@ -3,7 +3,7 @@ global:
 cluster-configs:
   namespaces:
     create: true
-    values: [ monitoring, jenkins ]
+    values: [ monitoring, jenkins, cert-manager ]
   root-ingress:
     namespace: jenkins
     serviceName: jenkins
@@ -51,7 +51,7 @@ nginx-ingress:
   replicas: 1
   default-backend-service: "jenkins/jenkins"
   namespace: jenkins
-  cert-issuer: "letsencrypt-staging"
+  cert-issuer: "letsencrypt-prod"
   ssl-protocols: "TLSv1.2 TLSv1.3"
   ssl-ciphers: "EECDH+CHACHA20:EECDH+AES"
   ssl-ecdh-curve: "X25519:prime256v1:secp521r1:secp384r1"
