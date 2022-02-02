@@ -8,10 +8,12 @@ cluster-configs:
   root-ingress:
     name: root-ingress
     namespace: kaleyra
-    cert-issuer: "letsencrypt-staging"
+    cert-issuer: "letsencrypt-prod"
     appRoot: citizen
     serviceName: citizen
     servicePort: 80
+    additionalAnnotations: |
+        cert-manager.io/cluster-issuer: letsencrypt-prod
  
   nginx-errors:
     enabled: false
