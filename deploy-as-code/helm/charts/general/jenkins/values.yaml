@@ -148,12 +148,12 @@ master:
   #   - name: http_proxy
   #     value: "http://192.168.64.1:3128"
   containerEnv:
-    - name: BITBUCKET_CLIENT_ID
+    - name: GIT_OAUTH_CLIENT_ID
       valueFrom:
         secretKeyRef:
           name: jenkins-credentials
           key: clientID
-    - name: BITBUCKET_CLIENT_SECRET
+    - name: GIT_OAUTH_CLIENT_SECRET
       valueFrom:
         secretKeyRef:
           name: jenkins-credentials
@@ -255,13 +255,19 @@ master:
   #   port: 9000
 
   # List of plugins to be install during Jenkins master start
-  # installPlugins:
-  #   - kubernetes:1.25.7
-  #   - workflow-job:2.39
-  #   - workflow-aggregator:2.6
-  #   - credentials-binding:1.23
-  #   - git:4.2.2
-  #   - configuration-as-code:1.41
+  installPlugins:
+    - kubernetes:1.25.7
+    - workflow-job:2.39
+    - workflow-aggregator:2.6
+    - credentials-binding:1.23
+    - git:4.2.2
+    - configuration-as-code:1.41
+
+  # Set to false to download the minimum required version of all dependencies.
+  installLatestPlugins: true
+
+  # Set to true to download latest dependencies of any plugin that is requested to have the latest version.
+  installLatestSpecifiedPlugins: false
 
   # List of plugins to install in addition to those listed in master.installPlugins
   additionalPlugins: []
@@ -386,17 +392,17 @@ master:
               {{- end }}      
           {{- else -}}                
             loggedInUsersCanDoAnything:
-              allowAnonymousRead: false     
+              allowAnonymousRead: false
           {{- end -}}                  
       security-realm: |-
         jenkins:
           securityRealm:
         {{- if .Values.oauth.enabled }}          
-            bitbucket:
-              githubWebUri: "https://bitbucket.org"
-              githubApiUri: "https://api.bitbucket.org"
-              clientID: "${BITBUCKET_CLIENT_ID}"
-              clientSecret: "${BITBUCKET_CLIENT_SECRET}"
+            github:
+              githubWebUri: "https://github.com"
+              githubApiUri: "https://api.github.org"
+              clientID: "${GIT_OAUTH_CLIENT_ID}"
+              clientSecret: "${GIT_OAUTH_CLIENT_SECRET}"
               oauthScopes: "read:org,user:email"    
         {{- else }}                
             legacy
@@ -480,8 +486,7 @@ master:
                 definition {
                   cps {
                       script("""library 'ci-libs'
-
-              deployer(repo:'git@bitbucket.org:kaleyra/devops.git', branch: 'master', helmDir: 'deploy-as-code/helm', environment: '{{ $job.name }}')""")
+                      deployer(repo:'git@bitbucket.org:kaleyra/devops.git', branch: 'master', helmDir: 'deploy-as-code/helm', environment: '{{ $job.name }}')""")
                       sandbox() 
                     }
                 }
@@ -499,7 +504,7 @@ master:
     # ignored if master.enableXmlConfig=true as master.authorizationStrategy takes precedence
     authorizationStrategy: |-
       loggedInUsersCanDoAnything:
-        allowAnonymousRead: false           
+        allowAnonymousRead: false        
 
     # welcome-message: |
     #   jenkins:
@@ -814,7 +819,7 @@ persistence:
 
   # azure:
   #   - diskName: kafka-0
-  #     diskUri: /subscriptions/b4e1aa53-c521-44e6-8a4d-5ae107916b5b/resourceGroups/MC_egov-micro-dev_egov-micro-dev_southindia/providers/Microsoft.Compute/disks/kafka-0
+  #  
   #openstack:
   #  - f37a03aa-6212-4c62-a805-9ce139fab180
   
@@ -832,7 +837,7 @@ persistence:
   storageClass:
   annotations: {}
   accessMode: "ReadWriteOnce"
-  size: "50Gi"
+  size: "100Gi"
   volumes:
   #  - name: nothing
   #    emptyDir: {}

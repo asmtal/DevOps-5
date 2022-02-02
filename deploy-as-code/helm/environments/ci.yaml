@@ -22,7 +22,7 @@ jenkins:
     enabled: true
     acl:
       admin:
-        - kaleyra*core-devops
+        - techmindsdev*core-devops
       user:
         - kaleyra*core-dev
         - kaleyra*core-stage
