@@ -62,7 +62,7 @@ nginx-ingress:
 
 cert-manager:
   namespace: jenkins
-  email: "coe-devops@kaleyra.com"
+  email: "gajendran@techminds.dev"
 
 cluster-autoscaler:
   namespace: jenkins
