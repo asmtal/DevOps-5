@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 name: cert-manager
-namespace: egov
+namespace: jenkins
 replicaCount: 1
 
 image:
@@ -26,13 +26,13 @@ clusterIssuer:
     name: letsencrypt-staging
     acme:
       server: https://acme-staging-v02.api.letsencrypt.org/directory 
-      email: nithin.dv@egovernments.org
+      email: gajendran@techminds.dev
       secretName: letsencrypt-staging
   prod:
     name: letsencrypt-prod
     acme:
       server: https://acme-v02.api.letsencrypt.org/directory
-      email: nithin.dv@egovernments.org
+      email: gajendran@techminds.dev
       secretName: letsencrypt-prod
 
 podSecurityContext: {}
