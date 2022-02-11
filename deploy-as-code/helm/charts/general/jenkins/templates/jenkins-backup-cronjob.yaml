@@ -34,7 +34,7 @@ spec:
             - -n
             - {{ template "jenkins.namespace" . }}
             - -l
-            - app.kubernetes.io/instance={{ .Release.Name }}
+            - app.kubernetes.io/instance={{ .Values.Name }}
             - --container
             - jenkins
             - --path
