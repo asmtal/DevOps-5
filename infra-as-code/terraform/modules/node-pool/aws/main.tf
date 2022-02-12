@@ -81,11 +81,11 @@ resource "aws_eks_node_group" "ng" {
   subnet_ids         = "${var.subnet}"
   capacity_type      = "SPOT"  
   
-  taint {
-    key = "dedicated"
-    value = "${var.node_group_name}"
-    effect = "NO_SCHEDULE"
-  }
+  #taint {
+  #  key = "dedicated"
+  #  value = "${var.node_group_name}"
+  #  effect = "NO_SCHEDULE"
+  #}
    
 
   labels = {

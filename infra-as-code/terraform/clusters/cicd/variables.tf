@@ -3,7 +3,7 @@
 #
 
 variable "cluster_name" {
-  default = "cicd"
+  default = "test-cicd"
 }
 
 variable "vpc_cidr_block" {
@@ -35,7 +35,7 @@ variable "number_of_worker_nodes" {
 }
 
 variable "spot_max_price" {
-  default = "0.0538"
+  default = "0.0600"
 }
 
 variable "ssh_key_name" {
