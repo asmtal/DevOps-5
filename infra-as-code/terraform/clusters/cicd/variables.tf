@@ -19,7 +19,7 @@ variable "availability_zones" {
 }
 
 variable "kubernetes_version" {
-  default = "1.21"
+  default = "1.20"
 }
 
 variable "instance_type" {

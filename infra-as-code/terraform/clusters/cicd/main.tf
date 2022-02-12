@@ -62,7 +62,7 @@ module "eks" {
   version         = "17.24.0"
   vpc_id = "${module.network.vpc_id}"
   cluster_name    = "${var.cluster_name}"
-  cluster_version =  "1.20"
+  cluster_version =  "${var.kubernetes_version}"
   subnets         = "${concat(module.network.private_subnets, module.network.public_subnets)}"
   
 
