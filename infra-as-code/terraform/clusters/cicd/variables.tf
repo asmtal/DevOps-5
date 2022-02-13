@@ -3,7 +3,7 @@
 #
 
 variable "cluster_name" {
-  default = "cicd"
+  default = "kal-cicd"
 }
 
 variable "vpc_cidr_block" {
@@ -19,7 +19,7 @@ variable "availability_zones" {
 }
 
 variable "kubernetes_version" {
-  default = "1.21"
+  default = "1.20"
 }
 
 variable "instance_type" {
@@ -35,7 +35,7 @@ variable "number_of_worker_nodes" {
 }
 
 variable "spot_max_price" {
-  default = "0.0538"
+  default = "0.0600"
 }
 
 variable "ssh_key_name" {

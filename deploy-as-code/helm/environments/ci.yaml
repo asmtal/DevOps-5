@@ -16,7 +16,7 @@ jenkins:
     enabled: true
     size: "30Gi"
     aws:
-      - volumeId: "vol-0fc52776106c2581a"
+      - volumeId: "vol-0daf6a937fe78972b"
         zone: ap-south-1b
   oauth:
     enabled: true
@@ -69,9 +69,9 @@ cluster-autoscaler:
   cloudProvider: aws  
   awsRegion: ap-south-1
   autoDiscovery:
-    clusterName: cicd
+    clusterName: jenkins
     tags:
-    - kubernetes.io/cluster/cicd
+    - kubernetes.io/cluster/jenkins
 
 postgres:
   namespace: jenkins

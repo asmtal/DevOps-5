@@ -14,7 +14,7 @@ namespaceOverride: jenkins
 clusterZone: "cluster.local"
 
 oauth:
-  enabled: false
+  enabled: true
   acl:
     admin: 
       - kaleyra*core-devops

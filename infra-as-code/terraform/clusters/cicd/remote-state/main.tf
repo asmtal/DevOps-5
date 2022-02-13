@@ -3,11 +3,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "test-cicd-state"
-
-  versioning {
-    enabled = true
-  }
+  bucket = "kal-cicd-state"
 
   lifecycle {
     prevent_destroy = false
@@ -15,7 +11,7 @@ resource "aws_s3_bucket" "terraform_state" {
 }
 
 resource "aws_dynamodb_table" "terraform_state_lock" {
-  name           = "test-cicd-state"
+  name           = "kal-cicd-state"
   read_capacity  = 1
   write_capacity = 1
   hash_key       = "LockID"
