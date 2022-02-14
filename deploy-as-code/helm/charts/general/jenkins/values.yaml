@@ -423,7 +423,7 @@ master:
                   scm:
                     git:
                       credentialsId: "git_read"
-                      remote: "git@github.com:kaleyra/devops.git"
+                      remote: "git@github.com:kaleyra/CIOps.git"
                       traits:
                       - "gitBranchDiscovery"
       system-message: | 
