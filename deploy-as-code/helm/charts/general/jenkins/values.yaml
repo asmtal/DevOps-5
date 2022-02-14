@@ -17,13 +17,13 @@ oauth:
   enabled: true
   acl:
     admin: 
-      - kaleyra*core-devops
+      - kaleyra*coe-devops
     user: 
-      - kaleyra*core-dev
+      - kaleyra*devops
 
 jobBuilder:
   repos: >-
-    'git@bitbucket.org:kaleyra/core.git','git@bitbucket.org:kaleyra/campaign-management.git','git@bitbucket.org:kaleyra/cap.git','git@bitbucket.org:kaleyra/conversational-ai.git','git@bitbucket.org:kaleyra/email.git','git@bitbucket.org:kaleyra/sms.git','git@bitbucket.org:kaleyra/voice.git','git@bitbucket.org:kaleyra/whatsapp.git'
+    'git@github.com:kaleyra/core.git','git@github.com:kaleyra/campaign-management.git','git@github.com:kaleyra/cap.git','git@github.com:kaleyra/conversational-ai.git','git@github.com:kaleyra/email.git','git@github.com:kaleyra/sms.git','git@github.com:kaleyra/voice.git','git@github.com:kaleyra/whatsapp.git'
 
 master:
   httpsKeyStore:
@@ -114,7 +114,7 @@ master:
   # If you disable the non-Jenkins identity store and instead use the Jenkins internal one,
   # you should revert master.adminUser to your preferred admin user:
   adminUser: "admin"
-  # adminPassword: <defaults to random>
+  #adminPassword: "password"
   admin:
     existingSecret: ""
     userKey: jenkins-admin-user
@@ -262,6 +262,7 @@ master:
     - credentials-binding:1.23
     - git:4.2.2
     - configuration-as-code:1.41
+    - bitbucket-oauth:0.12
 
   # Set to false to download the minimum required version of all dependencies.
   installLatestPlugins: true
@@ -400,10 +401,10 @@ master:
         {{- if .Values.oauth.enabled }}          
             github:
               githubWebUri: "https://github.com"
-              githubApiUri: "https://api.github.org"
+              githubApiUri: "https://api.github.com"
               clientID: "${GIT_OAUTH_CLIENT_ID}"
               clientSecret: "${GIT_OAUTH_CLIENT_SECRET}"
-              oauthScopes: "read:org,user:email"    
+              oauthScopes: "read:org,user:email"           
         {{- else }}                
             legacy
         {{- end -}}            
@@ -422,7 +423,7 @@ master:
                   scm:
                     git:
                       credentialsId: "git_read"
-                      remote: "git@bitbucket.org:kaleyra/devops.git"
+                      remote: "git@github.com:kaleyra/devops.git"
                       traits:
                       - "gitBranchDiscovery"
       system-message: | 
@@ -486,7 +487,7 @@ master:
                 definition {
                   cps {
                       script("""library 'ci-libs'
-                      deployer(repo:'git@bitbucket.org:kaleyra/devops.git', branch: 'master', helmDir: 'deploy-as-code/helm', environment: '{{ $job.name }}')""")
+                      deployer(repo:'git@github.com:kaleyra/devops.git', branch: 'master', helmDir: 'deploy-as-code/helm', environment: '{{ $job.name }}')""")
                       sandbox() 
                     }
                 }

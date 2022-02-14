@@ -1,5 +1,5 @@
 global:
-  domain: cicd.techminds.dev
+  domain: cicd.kaleyra.com
 cluster-configs:
   namespaces:
     create: true
@@ -22,21 +22,27 @@ jenkins:
     enabled: true
     acl:
       admin:
-        - techmindsdev*core-devops
+        - kaleyra*coe-devops
+        - kaleyra*devops
       user:
         - kaleyra*core-dev
         - kaleyra*core-stage
+        - kaleyra*core-prod
 
   jobBuilder:
     repos: >-
-      'git@bitbucket.org:kaleyra/core.git','git@bitbucket.org:kaleyra/campaign-management.git','git@bitbucket.org:kaleyra/cap.git','git@bitbucket.org:kaleyra/conversational-ai.git','git@bitbucket.org:kaleyra/email.git','git@bitbucket.org:kaleyra/sms.git','git@bitbucket.org:kaleyra/voice.git','git@bitbucket.org:kaleyra/whatsapp.git'
+      'git@github.com:kaleyra/core.git','git@github.com:kaleyra/campaign-management.git','git@github.com:kaleyra/cap.git','git@github.com:kaleyra/conversational-ai.git','git@github.com:kaleyra/email.git','git@github.com:kaleyra/sms.git','git@github.com:kaleyra/voice.git','git@github.com:kaleyra/whatsapp.git'
   deploymentJobs:
     - name: dev
       acl: [kaleyra*core-dev] 
     - name: stage
       acl: [kaleyra*core-stage]              
     - name: ci
-      acl: [kaleyra*core-devops]      
+      acl: [kaleyra*devops]      
+    - name: prod
+      acl: [kaleyra*prod] 
+    - name: coe-devops
+      acl: [kaleyra*coe-devops] 
        
   master:
     ingress:
@@ -62,7 +68,7 @@ nginx-ingress:
 
 cert-manager:
   namespace: jenkins
-  email: "gajendran@techminds.dev"
+  email: "gajendran.g@ext.kaleyra.com"
 
 cluster-autoscaler:
   namespace: jenkins
