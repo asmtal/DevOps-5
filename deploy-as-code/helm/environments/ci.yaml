@@ -28,10 +28,11 @@ jenkins:
         - kaleyra*core-dev
         - kaleyra*core-stage
         - kaleyra*core-prod
+        - kaleyra*extended-devops
 
   jobBuilder:
     repos: >-
-      'git@github.com:kaleyra/core.git','git@github.com:kaleyra/campaign-management.git','git@github.com:kaleyra/cap.git','git@github.com:kaleyra/conversational-ai.git','git@github.com:kaleyra/email.git','git@github.com:kaleyra/sms.git','git@github.com:kaleyra/voice.git','git@github.com:kaleyra/whatsapp.git'
+      'git@github.com:kaleyra/core.git','git@github.com:kaleyra/campaign-management.git','git@github.com:kaleyra/voice.git','git@github.com:kaleyra/sms.git','git@github.com:kaleyra/email.git','git@github.com:kaleyra/cap.git','git@github.com:kaleyra/conversations.git',
   deploymentJobs:
     - name: dev
       acl: [kaleyra*core-dev] 

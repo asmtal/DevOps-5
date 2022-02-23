@@ -1,0 +1,150 @@
+global:
+  app_url: stage-console.smsinfini.com
+  login_cookie_domain: .smsinfini.com
+  
+  app_debug: true
+  app_log_level: debug
+  app_name: Lumen
+  app_env: qa
+  app_timezone: UTC
+
+  #voice_throttle_limit: 5
+  schedule_min_limit : 15
+  exclude_throttling_ip: 13.233.203.188,15.207.179.204
+  host_supported: SG,EU,IN
+  sg_name: Singapore
+  eu_name: Europe
+  in_name: India
+
+  crm_enable_env: enable
+  default_pod: SG
+  current_pod: SG
+
+cluster-configs:
+  namespaces:
+    create: true
+    values: [ core, cert-manager, kaleyra, playground]
+
+  rbac:
+  - role: user
+    namespaces: [ playground ]
+  - role: admin
+    namespaces: [ playground, core, kaleyra]
+
+  root-ingress:
+    cert-issuer: "letsencrypt-prod"
+
+  configmaps:
+    core-config:
+      namespace: [ core ]
+      data:
+        # Databases
+        db_url: jdbc:mysql://kcloud-stage-db-1.c1zidjuhc5mn.ap-south-1.rds.amazonaws.com:3306/kcloud
+        db_connection: mysql
+        db_host: kcloud-stage-db-1.c1zidjuhc5mn.ap-south-1.rds.amazonaws.com
+        db_port: 3306
+        db_database: kcloud
+
+        global_db_url: jdbc:mysql://10.60.3.152:3306/pods
+        global_db_host: 10.60.3.152
+        global_db_port: 3306
+        global_db_database: pods
+
+        #Redis cache
+        cache_driver: redis
+        redis_host: hexa-stage-ap-rbac-1.cijac9.ng.0001.aps1.cache.amazonaws.com
+        redis_voice_host: hexa-stage-ap-rbac-1.cijac9.ng.0001.aps1.cache.amazonaws.com
+        redis_sms_host: hexa-stage-ap-rbac-1.cijac9.ng.0001.aps1.cache.amazonaws.com
+        redis_port: 6379
+        redis_voice_port: 6379
+        redis_sms_port: 6379
+
+        #Rabitmq
+        rabbitmq_host: 10.60.0.167
+        rabbitmq_port: 5672
+        activity_log_queue: user_activity
+        queue_connection: sync
+
+        # AWS S3 Bucket
+        aws_bucket: stage-hexa
+        aws_default_region: ap-south-1
+        recording_access_limit: 6months
+        record_aws_bucket: hexa-stage-voice
+        record_aws_default_region: ap-south-1
+        aws_bucket_private: stage-hexa-invoice
+
+        whatsapp_nfs_path_with_slash: /mnt/hexa-nfs/whatsapp/media/
+        whatsapp_mount_path: /mnt/data/hexa-nfs
+        whatsapp_subscription_price: 500
+
+        demo_credit_email_notification: ulatsing@kaleyra.com
+        insights_overview_mailer_list: ulatsing@kaleyra.com
+        from_email: support@kaleyra.com
+        admin_email: aman.jain@kaleyra.com
+        admin_name: AmanJain
+
+    kaleyra-service-host:
+      data:
+        ksms_url: http://sms-web/v1
+        #verify_url: http://verify:8080/
+        verify_url: http://verify:8080/v1/
+        file_validation_url: http://contact-processor:5006
+        billings_url: http://bills-web/v1
+        billings_domain: http://bills-web
+        contacts_url: http://contact-web/v1/
+        vector_url: http://vector-web/v1/vector
+        campaign_url: http://campaign-web/v1/campaign
+        reports_url: http://report-web/v1
+        rbac_url: http://rbac-service/api/
+        #rbac_url: http://rbac-service/
+        surface_url: http://surface-web/v1/surface
+        catalogue_url: http://catalogue-web/v1/catalogue
+        callback_url: http://callback-node:3020/api/profile
+        kaleyra_global_callback_url: 
+        kflow_url: http://kflow:4000/v1/flowbuilder
+        whatsapp_service_url: http://waservice:3000/api/v1/whatsapp/
+        whatsapp_url: http://whatsapp-web/api/v1/whatsapp/
+        email_url: http://mails:3021/v1/mail/sendmail
+
+        ####### Ext URLs
+        sg_host: https://stage-console.smsinfini.com
+        txtly_url: https://txtly-console.smsinfini.com/api/v1/
+        #txtly_url: http://klr.bz/api/v1/
+        eu_host: https://stage-eu-console.smsinfini.com
+        freshsales_url: https://kalerahexa.freshsales.io/api/
+        payment_callback_url: https://stage-console.smsinfini.com/
+       
+nginx-ingress:
+  replicas: 1
+  namespace: core
+  cert-issuer: "letsencrypt-prod"
+  ssl-protocols: "TLSv1.2 TLSv1.3"
+  ssl-ciphers: "EECDH+CHACHA20:EECDH+AES"
+  ssl-ecdh-curve: "X25519:prime256v1:secp521r1:secp384r1"
+  controller:
+    image:
+      repository: gajentechm/nginx-ingress-controller
+      tag: "0.26.1"
+
+cert-manager:
+  namespace: core
+  email: "gajendran.g@ext.kaleyra.com"
+
+hexa-api:
+  replicas: 1
+  images:
+    - 
+  db_migration_image:
+  # log
+  log_channel: stack
+  log_slack_webhook_url:
+  trace_log_path: /code/storage/logs/logs-hexa-api.log
+  internal_log_time_track: 1
+  app_log_filesize: 10mb
+  
+bills:
+  replicas: 2
+  images:
+    - 
+  app_log_filesize: 100mb
+  app_log_level: debug  

@@ -1,12 +1,12 @@
 # Common Labels
 labels:
-  app: "bills"
-  group: "core"
+  app: "api-service"
+  group: "cap"
 
 # Ingress Configs
 ingress:
   enabled: true
-  context: "bills"
+  context: "api-service"
   ip-whitelist: "0.0.0.0/0"
   additionalAnnotations: | 
     nginx.ingress.kubernetes.io/whitelist-source-range: {{ index .Values "ingress" "ip-whitelist" | quote }}
@@ -15,13 +15,13 @@ ingress:
 initContainers:
   dbMigration:
     enabled: true
-    schemaTable: "bills-db"
+    schemaTable: "api-service-db"
     image:
-      repository: "bills-db"
+      repository: "api-service-db"
 
 # Container Configs
 image:
-  repository: "bills:master"
+  repository: "api-service:master"
 replicas: "1"
 appType: "java-spring"
 app_log_level: info
@@ -39,11 +39,12 @@ env: |
   - name: FRESHSALES_API_KEY
     valueFrom:
       secretKeyRef:
-        name: freshsales_api_key
+        name: core-config
         key: core-something   
+
   - name: APP_LOG_FILESIZE
     value: {{ index .Values "app_log_filesize" | quote }}
-  {{- if index .Values "app_env" | equals "qa" }}
+  {{- if index .Values "app_env" | quote }}
   - name: FROM_EMAIL
     value: {{ index .Values "qa_from_email" | quote }}
   {{- end }}
