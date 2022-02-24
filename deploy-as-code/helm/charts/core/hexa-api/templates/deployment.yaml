@@ -19,7 +19,7 @@ spec:
             claimName: {{ .Values.volumes.name }} 
 
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ .Values.appName }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}{{ .Values.image.sprint }}"
           ports:
             containerPort: {{ .Values.app.containerPort }}
