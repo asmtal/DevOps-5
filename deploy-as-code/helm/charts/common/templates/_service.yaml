@@ -1,29 +1,15 @@
-{{- define "common.service" -}}
----
+# Hexa-API
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "common.name" . }}
-  namespace: {{ .Values.namespace }}  
-  annotations: 
-{{- if .Values.metrics }}   
-    prometheus.io/path: {{ .Values.metrics.path | quote }}
-    prometheus.io/port: {{ .Values.metrics.port | quote }}
-    prometheus.io/scrape: "true"  
-{{- end }}
-{{- if .Values.ingress.zuul }} 
-    zuul/route-path: {{ .Values.ingress.context }}
-{{- end }}
-{{- if and .Values.service .Values.service.additionalAnnotations}}                                   
-  {{- tpl  .Values.service.additionalAnnotations . | nindent 4 }}
-{{- end }} 
-  labels:
-{{- include "common.labels" . | nindent 4 }}   
+  name: {{ .Values.apiApp.appName }}
 spec:
-  selector: 
-{{- include "common.labels" . | nindent 4 }}    
+  type: {{ .Values.apiApp.service.type }}
+  selector:
+    app: {{ .Values.apiApp.appName }}
   ports:
-  - name: http
-    port: {{ .Values.httpPort }}
-    targetPort: {{ .Values.httpPort }}  
-{{- end -}}
+    - port: {{ .Values.apiApp.service.port }}
+      nodePort: {{ .Values.apiApp.service.nodePort }}
+# Hexa-API 
+---
+
