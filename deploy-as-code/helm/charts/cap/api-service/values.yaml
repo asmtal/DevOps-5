@@ -23,11 +23,9 @@ initContainers:
 image:
   repository: "api-service:master"
 replicas: "1"
-appType: "java-spring"
 app_log_level: info
 log_level: false
-heap: "-Xmx192m -Xms192m"
-java-args: ""
+
 
 # Additional Container Envs
 env: |  
