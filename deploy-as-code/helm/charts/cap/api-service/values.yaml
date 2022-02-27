@@ -226,3 +226,5 @@ env: |
     value: {{ index .Values callback_url | quote }}
   - name: SCHEDULE_MIN_LIMIT
     value: {{ index .Values schedule_min_limit | quote }}
+
+#Note Some Changes are required.
