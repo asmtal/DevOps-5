@@ -38,18 +38,6 @@ env: |
     value: {{ index .Values log_channel | quote }}
   - name: LOG_SLACK_WEBHOOK_URL
     value: {{ index .Values log_slack_webhook_url | quote }}
-  - name: DB_CONNECTION
-    value: {{ index .Values db_connection | quote }}
-  - name: DB_HOST
-    value: {{ index .Values db_host | quote }}
-  - name: DB_PORT
-    value: {{ index .Values db_port | quote }}
-  - name: DB_DATABASE
-    value: {{ index .Values db_database | quote }}
-  - name: DB_USERNAME
-    value: {{ index .Values db_username | quote }}
-  - name: DB_PASSWORD
-    value: {{ index .Values db_password | quote }}
   - name: CACHE_DRIVER
     value: {{ index .Values cache_driver | quote }}
   - name: QUEUE_CONNECTION
@@ -60,20 +48,6 @@ env: |
     value: {{ index .Values app_log_filesize | quote }}
   - name: APP_LOG_LEVEL
     value: {{ index .Values app_log_level | quote }}
-  - name: REDIS_HOST
-    value: {{ index .Values redis_host | quote }}
-  - name: REDIS_PASSWORD
-    value: {{ index .Values redis_password | quote }}
-  - name: REDIS_PORT
-    value: {{ index .Values redis_port | quote }}
-  - name: REDIS_VOICE_PORT
-    value: {{ index .Values redis_voice_port | quote }}
-  - name: REDIS_VOICE_HOST
-    value: {{ index .Values redis_voice_host | quote }}
-  - name: REDIS_SMS_HOST
-    value: {{ index .Values redis_sms_host | quote }}
-  - name: REDIS_SMS_PORT
-    value: {{ index .Values redis_sms_port | quote }}
   - name: LOOKUP_URL
     value: {{ index .Values lookup_url | quote }}
   - name: KSMS_URL
@@ -178,24 +152,6 @@ env: |
     value: {{ index .Values encrypt_key | quote }}
   - name: ENCRYPT_IV
     value: {{ index .Values encrypt_iv | quote }}
-  - name: GLOBAL_DB_HOST
-    value: {{ index .Values global_db_host | quote }}
-  - name: GLOBAL_DB_PORT
-    value: {{ index .Values global_db_port | quote }}
-  - name: GLOBAL_DB_DATABASE
-    value: {{ index .Values global_db_database | quote }}
-  - name: GLOBAL_DB_USERNAME
-    value: {{ index .Values global_db_username | quote }}
-  - name: GLOBAL_DB_PASSWORD
-    value: {{ index .Values global_db_password | quote }}
-  - name: PUBLIC_RABBITMQ_HOST
-    value: {{ index .Values public_rabbitmq_host | quote }}
-  - name: PUBLIC_RABBITMQ_PORT
-    value: {{ index .Values public_rabbitmq_port | quote }}
-  - name: PUBLIC_RABBITMQ_USERNAME
-    value: {{ index .Values public_rabbitmq_username | quote }}
-  - name: PUBLIC_RABBITMQ_PASSWORD
-    value: {{ index .Values public_rabbitmq_password | quote }}
   - name: APPROVALS_QUEUE
     value: {{ index .Values approvals_queue | quote }}
   - name: EXCLUDE_THROTTLING_IP
@@ -208,14 +164,6 @@ env: |
     value: {{ index .Values eu_name | quote }}
   - name: IN_NAME
     value: {{ index .Values in_name | quote }}
-  - name: RABBITMQ_HOST
-    value: {{ index .Values rabbitmq_host | quote }}
-  - name: RABBITMQ_PORT
-    value: {{ index .Values rabbitmq_port | quote }}
-  - name: RABBITMQ_USERNAME
-    value: {{ index .Values rabbitmq_username | quote }}
-  - name: RABBITMQ_PASSWORD
-    value: {{ index .Values rabbitmq_password | quote }}
   - name: ACTIVITY_LOG_QUEUE
     value: {{ index .Values activity_log_queue | quote }}
   - name: KFLOW_URL
@@ -228,3 +176,93 @@ env: |
     value: {{ index .Values schedule_min_limit | quote }}
 
 #Note Some Changes are required.
+
+
+# To call from ConfigMap
+      - name: SPRING_DATASOURCE_URL
+        valueFrom:
+          configMapKeyRef:
+            name: core-config
+            key: db-url
+#  To call from Secrets
+      - name: SPRING_DATASOURCE_USERNAME
+        valueFrom:
+          secretKeyRef:
+            name: db
+            key: username
+      - name: SPRING_DATASOURCE_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: db
+            key: password
+
+  - name: RBAC_URL
+    valueFrom:
+      configMapKeyRef:
+        name: kaleyra-service-host
+        key: rbac_url
+
+
+  - name: GLOBAL_DB_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: common
+        key: global_db_username
+
+
+
+#MySQL Config
+  - name: DB_CONNECTION
+    value: {{ index .Values db_connection | quote }}
+  - name: DB_HOST
+    value: {{ index .Values db_host | quote }}
+  - name: DB_PORT
+    value: {{ index .Values db_port | quote }}
+  - name: DB_DATABASE
+    value: {{ index .Values db_database | quote }}
+  - name: DB_USERNAME
+    value: {{ index .Values db_username | quote }}
+  - name: DB_PASSWORD
+    value: {{ index .Values db_password | quote }}
+  - name: GLOBAL_DB_HOST
+    value: {{ index .Values global_db_host | quote }}
+  - name: GLOBAL_DB_PORT
+    value: {{ index .Values global_db_port | quote }}
+  - name: GLOBAL_DB_DATABASE
+    value: {{ index .Values global_db_database | quote }}
+
+  - name: GLOBAL_DB_PASSWORD
+    value: {{ index .Values global_db_password | quote }}
+
+#Rabbit Config
+  - name: RABBITMQ_HOST
+    value: {{ index .Values rabbitmq_host | quote }}
+  - name: RABBITMQ_PORT
+    value: {{ index .Values rabbitmq_port | quote }}
+  - name: RABBITMQ_USERNAME
+    value: {{ index .Values rabbitmq_username | quote }}
+  - name: RABBITMQ_PASSWORD
+    value: {{ index .Values rabbitmq_password | quote }}
+  - name: PUBLIC_RABBITMQ_HOST
+    value: {{ index .Values public_rabbitmq_host | quote }}
+  - name: PUBLIC_RABBITMQ_PORT
+    value: {{ index .Values public_rabbitmq_port | quote }}
+  - name: PUBLIC_RABBITMQ_USERNAME
+    value: {{ index .Values public_rabbitmq_username | quote }}
+  - name: PUBLIC_RABBITMQ_PASSWORD
+    value: {{ index .Values public_rabbitmq_password | quote }}
+#Redis Config
+  - name: REDIS_HOST
+    value: {{ index .Values redis_host | quote }}
+  - name: REDIS_PASSWORD
+    value: {{ index .Values redis_password | quote }}
+  - name: REDIS_PORT
+    value: {{ index .Values redis_port | quote }}
+  - name: REDIS_VOICE_PORT
+    value: {{ index .Values redis_voice_port | quote }}
+  - name: REDIS_VOICE_HOST
+    value: {{ index .Values redis_voice_host | quote }}
+  - name: REDIS_SMS_HOST
+    value: {{ index .Values redis_sms_host | quote }}
+  - name: REDIS_SMS_PORT
+    value: {{ index .Values redis_sms_port | quote }}
