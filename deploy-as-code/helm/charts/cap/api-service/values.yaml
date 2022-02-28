@@ -23,172 +23,395 @@ log_level: false
 # Additional Container Envs
 env: |  
   - name: APP_NAME
-    value: {{ index .Values app_name | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: app_name
   - name: APP_ENV
-    value: {{ index .Values app_env | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: app_env
   - name: APP_KEY
-    value: {{ index .Values app_key | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: app_key
   - name: APP_DEBUG
-    value: {{ index .Values app_debug | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: app_debug
   - name: APP_URL
-    value: {{ index .Values app_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: app_url
   - name: APP_TIMEZONE
-    value: {{ index .Values app_timezone | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: app_timezone
   - name: LOG_CHANNEL
-    value: {{ index .Values log_channel | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: log_channel
   - name: LOG_SLACK_WEBHOOK_URL
-    value: {{ index .Values log_slack_webhook_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: log_slack_webhook_url
   - name: CACHE_DRIVER
-    value: {{ index .Values cache_driver | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: cache_driver
   - name: QUEUE_CONNECTION
-    value: {{ index .Values queue_connection | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: queue_connection
   - name: TRACE_LOG_PATH
-    value: {{ index .Values trace_log_path | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: trace_log_path
   - name: APP_LOG_FILESIZE
-    value: {{ index .Values app_log_filesize | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: app_log_filesize
   - name: APP_LOG_LEVEL
-    value: {{ index .Values app_log_level | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: app_log_level
   - name: LOOKUP_URL
-    value: {{ index .Values lookup_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: lookup_url
   - name: KSMS_URL
-    value: {{ index .Values ksms_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: ksms_url
   - name: RBAC_SERVICE_API_KEY
-    value: {{ index .Values rbac_service_api_key | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: rbac_service_api_key
   - name: FILE_VALIDATION_URL
-    value: {{ index .Values file_validation_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: file_validation_url
   - name: BILLINGS_URL
-    value: {{ index .Values billings_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: billings_url
   - name: BILLINGS_DOMAIN
-    value: {{ index .Values billings_domain | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: billings_domain
   - name: RAZORPAY_KEY
-    value: {{ index .Values razorpay_key | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: razorpay_key
   - name: STRIPE_PUBLISHABLE_KEY
-    value: {{ index .Values stripe_publishable_key | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: stripe_publishable_key
   - name: PAYMENT_CALLBACK_URL
-    value: {{ index .Values payment_callback_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: payment_callback_url
   - name: DEMO_CREDIT_EMAIL_NOTIFICATION
-    value: {{ index .Values demo_credit_email_notification | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: demo_credit_email_notification
   - name: CONTACTS_URL
-    value: {{ index .Values contacts_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: contacts_url
   - name: VECTOR_URL
-    value: {{ index .Values vector_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: vector_url
   - name: CAMPAIGN_URL
-    value: {{ index .Values campaign_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: campaign_url
   - name: REPORTS_URL
-    value: {{ index .Values reports_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: reports_url
   - name: INSIGHTS_OVERVIEW_MAILER_LIST
-    value: {{ index .Values insights_overview_mailer_list | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: insights_overview_mailer_list
   - name: WHATSAPP_NFS_PATH_WITH_SLASH
-    value: {{ index .Values whatsapp_nfs_path_with_slash | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: whatsapp_nfs_path_with_slash
   - name: WHATSAPP_MOUNT_PATH
-    value: {{ index .Values whatsapp_mount_path | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: whatsapp_mount_path
   - name: WHATSAPP_SANDBOX_NUMBER
-    value: {{ index .Values whatsapp_sandbox_number | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: whatsapp_sandbox_number
   - name: WHATSAPP_SERVICE_URL
-    value: {{ index .Values whatsapp_service_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: whatsapp_service_url
   - name: WHATSAPP_URL
-    value: {{ index .Values whatsapp_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: whatsapp_url
   - name: WHATSAPP_SUBSCRIPTION_PRICE
-    value: {{ index .Values whatsapp_subscription_price | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: whatsapp_subscription_price
   - name: FROM_EMAIL
-    value: {{ index .Values from_email | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: from_email
   - name: EMAIL_URL
-    value: {{ index .Values email_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: email_url
   - name: ADMIN_EMAIL
-    value: {{ index .Values admin_email | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: admin_email
   - name: ADMIN_NAME
-    value: {{ index .Values admin_name | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: admin_name
   - name: AWS_ACCESS_KEY_ID
-    value: {{ index .Values aws_access_key_id | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: aws_access_key_id
   - name: AWS_SECRET_ACCESS_KEY
-    value: {{ index .Values aws_secret_access_key | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: aws_secret_access_key
   - name: AWS_BUCKET
-    value: {{ index .Values aws_bucket | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: aws_bucket
   - name: AWS_DEFAULT_REGION
-    value: {{ index .Values aws_default_region | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: aws_default_region
   - name: RBAC_URL
-    value: {{ index .Values rbac_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: rbac_url
   - name: SURFACE_URL
-    value: {{ index .Values surface_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: surface_url
   - name: CATALOGUE_URL
-    value: {{ index .Values catalogue_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: catalogue_url
   - name: VERIFY_URL
-    value: {{ index .Values verify_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: verify_url
   - name: FRESHSALES_URL
-    value: {{ index .Values freshsales_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: freshsales_url
   - name: FRESHSALES_API_KEY
-    value: {{ index .Values freshsales_api_key | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: freshsales_api_key
   - name: CRM_ENABLE_ENV
-    value: {{ index .Values crm_enable_env | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: crm_enable_env
   - name: APP_SALT_16BYTE
-    value: {{ index .Values app_salt_16byte | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: app_salt_16byte
   - name: INTERNAL_LOG_TIME_TRACK
-    value: {{ index .Values internal_log_time_track | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: internal_log_time_track
   - name: AWS_BUCKET_PRIVATE
-    value: {{ index .Values aws_bucket_private | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: aws_bucket_private
   - name: TXTLY_URL
-    value: {{ index .Values txtly_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: txtly_url
   - name: SG_HOST
-    value: {{ index .Values sg_host | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: sg_host
   - name: DEFAULT_POD
-    value: {{ index .Values default_pod | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: default_pod
   - name: CURRENT_POD
-    value: {{ index .Values current_pod | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: current_pod
   - name: LOGIN_COOKIE_DOMAIN
-    value: {{ index .Values login_cookie_domain | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: login_cookie_domain
   - name: EU_HOST
-    value: {{ index .Values eu_host | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: eu_host
   - name: RECORDING_ACCESS_LIMIT
-    value: {{ index .Values recording_access_limit | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: recording_access_limit
   - name: RECORD_AWS_ACCESS_KEY_ID
-    value: {{ index .Values record_aws_access_key_id | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: record_aws_access_key_id
   - name: RECORD_AWS_SECRET_ACCESS_KEY
-    value: {{ index .Values record_aws_secret_access_key | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: record_aws_secret_access_key
   - name: RECORD_AWS_BUCKET
-    value: {{ index .Values record_aws_bucket | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: record_aws_bucket
   - name: RECORD_AWS_DEFAULT_REGION
-    value: {{ index .Values record_aws_default_region | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: record_aws_default_region
   - name: ENCRYPT_KEY
-    value: {{ index .Values encrypt_key | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: encrypt_key
   - name: ENCRYPT_IV
-    value: {{ index .Values encrypt_iv | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: encrypt_iv
   - name: APPROVALS_QUEUE
-    value: {{ index .Values approvals_queue | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: approvals_queue
   - name: EXCLUDE_THROTTLING_IP
-    value: {{ index .Values exclude_throttling_ip | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: exclude_throttling_ip
   - name: HOST_SUPPORTED
-    value: {{ index .Values host_supported | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: host_supported
   - name: SG_NAME
-    value: {{ index .Values sg_name | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: sg_name
   - name: EU_NAME
-    value: {{ index .Values eu_name | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: eu_name
   - name: IN_NAME
-    value: {{ index .Values in_name | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: in_name
   - name: ACTIVITY_LOG_QUEUE
-    value: {{ index .Values activity_log_queue | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: activity_log_queue
   - name: KFLOW_URL
-    value: {{ index .Values kflow_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: kflow_url
   - name: KALEYRA_GLOBAL_CALLBACK_URL
-    value: {{ index .Values kaleyra_global_callback_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: kaleyra_global_callback_url
   - name: CALLBACK_URL
-    value: {{ index .Values callback_url | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: callback_url
   - name: SCHEDULE_MIN_LIMIT
-    value: {{ index .Values schedule_min_limit | quote }}
-
-############## Nikita / Mahesh Make Changes here
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: schedule_min_limit
   - name: RBAC_URL
     valueFrom:
       configMapKeyRef:
         name: kaleyra-service-host
         key: rbac_url
-
   - name: DB_CONNECTION
     valueFrom:
       configMapKeyRef:
         name: core-config
         key: db_connection
-
-##### Call Secrets 
   - name: GLOBAL_DB_USERNAME
     valueFrom:
       secretKeyRef:
@@ -234,7 +457,6 @@ env: |
       secretKeyRef:
         name: common
         key: redis_password
-#MySQL Config
   - name: DB_HOST
     valueFrom:
       configMapKeyRef:
@@ -265,30 +487,53 @@ env: |
       configMapKeyRef:
         name: core-config
         key: global_db_database
-
-
-
-#Rabbit Config
   - name: RABBITMQ_HOST
-    value: {{ index .Values rabbitmq_host | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: rabbitmq_host
   - name: RABBITMQ_PORT
-    value: {{ index .Values rabbitmq_port | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: rabbitmq_port
   - name: PUBLIC_RABBITMQ_HOST
-    value: {{ index .Values public_rabbitmq_host | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: public_rabbitmq_host
   - name: PUBLIC_RABBITMQ_PORT
-    value: {{ index .Values public_rabbitmq_port | quote }}
-
-
-#Redis Config
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: public_rabbitmq_port
   - name: REDIS_HOST
-    value: {{ index .Values redis_host | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: redis_host
   - name: REDIS_PORT
-    value: {{ index .Values redis_port | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: redis_port
   - name: REDIS_VOICE_PORT
-    value: {{ index .Values redis_voice_port | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: redis_voice_port
   - name: REDIS_VOICE_HOST
-    value: {{ index .Values redis_voice_host | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: redis_voice_host
   - name: REDIS_SMS_HOST
-    value: {{ index .Values redis_sms_host | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: redis_sms_host
   - name: REDIS_SMS_PORT
-    value: {{ index .Values redis_sms_port | quote }}
+    valueFrom:
+      configMapRef:
+        name: core-config
+        key: redis_sms_port
