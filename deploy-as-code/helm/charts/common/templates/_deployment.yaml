@@ -14,7 +14,8 @@ spec:
 {{- if .Capabilities.APIVersions.Has "apps/v1" }}
   selector:
     matchLabels:
-      {{- include "common.labels" . | nindent 6 }}  
+      {{- include "common.labels" . | nindent 6 }} 
+      app: {{ .Values.appName  . | nindent 6 }}   
 {{- end }}
 {{- $persistence := .Values.persistence | default dict -}}
 {{- if and (not (hasKey $persistence "enabled")) (eq (.Values.replicas | int) 1) }}
@@ -33,7 +34,8 @@ spec:
         {{- tpl  .Values.additionalAnnotations . | nindent 8 }}
       {{- end }}        
       labels:
-      {{- include "common.labels" . | nindent 8 }}            
+      {{- include "common.labels" . | nindent 8 }}
+      app: {{ .Values.appName  . | nindent 8 }}            
     spec:
     {{- if .Values.initContainers.gitSync.enabled }}
       securityContext:

@@ -11,40 +11,220 @@ ingress:
   additionalAnnotations: | 
     nginx.ingress.kubernetes.io/whitelist-source-range: {{ index .Values "ingress" "ip-whitelist" | quote }}
 
-# Init Containers Configs
-initContainers:
-  dbMigration:
-    enabled: true
-    schemaTable: "api-service-db"
-    image:
-      repository: "api-service-db"
 
 # Container Configs
 image:
   repository: "api-service:master"
 replicas: "1"
-appType: "java-spring"
 app_log_level: info
 log_level: false
-heap: "-Xmx192m -Xms192m"
-java-args: ""
+
 
 # Additional Container Envs
 env: |  
-  - name: CORE_CONFIG
-    valueFrom:
-      configMapKeyRef:
-        name: core-config
-        key: core-something
-  - name: FRESHSALES_API_KEY
-    valueFrom:
-      secretKeyRef:
-        name: core-config
-        key: core-something   
-
+  - name: APP_NAME
+    value: {{ index .Values app_name | quote }}
+  - name: APP_ENV
+    value: {{ index .Values app_env | quote }}
+  - name: APP_KEY
+    value: {{ index .Values app_key | quote }}
+  - name: APP_DEBUG
+    value: {{ index .Values app_debug | quote }}
+  - name: APP_URL
+    value: {{ index .Values app_url | quote }}
+  - name: APP_TIMEZONE
+    value: {{ index .Values app_timezone | quote }}
+  - name: LOG_CHANNEL
+    value: {{ index .Values log_channel | quote }}
+  - name: LOG_SLACK_WEBHOOK_URL
+    value: {{ index .Values log_slack_webhook_url | quote }}
+  - name: DB_CONNECTION
+    value: {{ index .Values db_connection | quote }}
+  - name: DB_HOST
+    value: {{ index .Values db_host | quote }}
+  - name: DB_PORT
+    value: {{ index .Values db_port | quote }}
+  - name: DB_DATABASE
+    value: {{ index .Values db_database | quote }}
+  - name: DB_USERNAME
+    value: {{ index .Values db_username | quote }}
+  - name: DB_PASSWORD
+    value: {{ index .Values db_password | quote }}
+  - name: CACHE_DRIVER
+    value: {{ index .Values cache_driver | quote }}
+  - name: QUEUE_CONNECTION
+    value: {{ index .Values queue_connection | quote }}
+  - name: TRACE_LOG_PATH
+    value: {{ index .Values trace_log_path | quote }}
   - name: APP_LOG_FILESIZE
-    value: {{ index .Values "app_log_filesize" | quote }}
-  {{- if index .Values "app_env" | quote }}
+    value: {{ index .Values app_log_filesize | quote }}
+  - name: APP_LOG_LEVEL
+    value: {{ index .Values app_log_level | quote }}
+  - name: REDIS_HOST
+    value: {{ index .Values redis_host | quote }}
+  - name: REDIS_PASSWORD
+    value: {{ index .Values redis_password | quote }}
+  - name: REDIS_PORT
+    value: {{ index .Values redis_port | quote }}
+  - name: REDIS_VOICE_PORT
+    value: {{ index .Values redis_voice_port | quote }}
+  - name: REDIS_VOICE_HOST
+    value: {{ index .Values redis_voice_host | quote }}
+  - name: REDIS_SMS_HOST
+    value: {{ index .Values redis_sms_host | quote }}
+  - name: REDIS_SMS_PORT
+    value: {{ index .Values redis_sms_port | quote }}
+  - name: LOOKUP_URL
+    value: {{ index .Values lookup_url | quote }}
+  - name: KSMS_URL
+    value: {{ index .Values ksms_url | quote }}
+  - name: RBAC_SERVICE_API_KEY
+    value: {{ index .Values rbac_service_api_key | quote }}
+  - name: FILE_VALIDATION_URL
+    value: {{ index .Values file_validation_url | quote }}
+  - name: BILLINGS_URL
+    value: {{ index .Values billings_url | quote }}
+  - name: BILLINGS_DOMAIN
+    value: {{ index .Values billings_domain | quote }}
+  - name: RAZORPAY_KEY
+    value: {{ index .Values razorpay_key | quote }}
+  - name: STRIPE_PUBLISHABLE_KEY
+    value: {{ index .Values stripe_publishable_key | quote }}
+  - name: PAYMENT_CALLBACK_URL
+    value: {{ index .Values payment_callback_url | quote }}
+  - name: DEMO_CREDIT_EMAIL_NOTIFICATION
+    value: {{ index .Values demo_credit_email_notification | quote }}
+  - name: CONTACTS_URL
+    value: {{ index .Values contacts_url | quote }}
+  - name: VECTOR_URL
+    value: {{ index .Values vector_url | quote }}
+  - name: CAMPAIGN_URL
+    value: {{ index .Values campaign_url | quote }}
+  - name: REPORTS_URL
+    value: {{ index .Values reports_url | quote }}
+  - name: INSIGHTS_OVERVIEW_MAILER_LIST
+    value: {{ index .Values insights_overview_mailer_list | quote }}
+  - name: WHATSAPP_NFS_PATH_WITH_SLASH
+    value: {{ index .Values whatsapp_nfs_path_with_slash | quote }}
+  - name: WHATSAPP_MOUNT_PATH
+    value: {{ index .Values whatsapp_mount_path | quote }}
+  - name: WHATSAPP_SANDBOX_NUMBER
+    value: {{ index .Values whatsapp_sandbox_number | quote }}
+  - name: WHATSAPP_SERVICE_URL
+    value: {{ index .Values whatsapp_service_url | quote }}
+  - name: WHATSAPP_URL
+    value: {{ index .Values whatsapp_url | quote }}
+  - name: WHATSAPP_SUBSCRIPTION_PRICE
+    value: {{ index .Values whatsapp_subscription_price | quote }}
   - name: FROM_EMAIL
-    value: {{ index .Values "qa_from_email" | quote }}
-  {{- end }}
+    value: {{ index .Values from_email | quote }}
+  - name: EMAIL_URL
+    value: {{ index .Values email_url | quote }}
+  - name: ADMIN_EMAIL
+    value: {{ index .Values admin_email | quote }}
+  - name: ADMIN_NAME
+    value: {{ index .Values admin_name | quote }}
+  - name: AWS_ACCESS_KEY_ID
+    value: {{ index .Values aws_access_key_id | quote }}
+  - name: AWS_SECRET_ACCESS_KEY
+    value: {{ index .Values aws_secret_access_key | quote }}
+  - name: AWS_BUCKET
+    value: {{ index .Values aws_bucket | quote }}
+  - name: AWS_DEFAULT_REGION
+    value: {{ index .Values aws_default_region | quote }}
+  - name: RBAC_URL
+    value: {{ index .Values rbac_url | quote }}
+  - name: SURFACE_URL
+    value: {{ index .Values surface_url | quote }}
+  - name: CATALOGUE_URL
+    value: {{ index .Values catalogue_url | quote }}
+  - name: VERIFY_URL
+    value: {{ index .Values verify_url | quote }}
+  - name: FRESHSALES_URL
+    value: {{ index .Values freshsales_url | quote }}
+  - name: FRESHSALES_API_KEY
+    value: {{ index .Values freshsales_api_key | quote }}
+  - name: CRM_ENABLE_ENV
+    value: {{ index .Values crm_enable_env | quote }}
+  - name: APP_SALT_16BYTE
+    value: {{ index .Values app_salt_16byte | quote }}
+  - name: INTERNAL_LOG_TIME_TRACK
+    value: {{ index .Values internal_log_time_track | quote }}
+  - name: AWS_BUCKET_PRIVATE
+    value: {{ index .Values aws_bucket_private | quote }}
+  - name: TXTLY_URL
+    value: {{ index .Values txtly_url | quote }}
+  - name: SG_HOST
+    value: {{ index .Values sg_host | quote }}
+  - name: DEFAULT_POD
+    value: {{ index .Values default_pod | quote }}
+  - name: CURRENT_POD
+    value: {{ index .Values current_pod | quote }}
+  - name: LOGIN_COOKIE_DOMAIN
+    value: {{ index .Values login_cookie_domain | quote }}
+  - name: EU_HOST
+    value: {{ index .Values eu_host | quote }}
+  - name: RECORDING_ACCESS_LIMIT
+    value: {{ index .Values recording_access_limit | quote }}
+  - name: RECORD_AWS_ACCESS_KEY_ID
+    value: {{ index .Values record_aws_access_key_id | quote }}
+  - name: RECORD_AWS_SECRET_ACCESS_KEY
+    value: {{ index .Values record_aws_secret_access_key | quote }}
+  - name: RECORD_AWS_BUCKET
+    value: {{ index .Values record_aws_bucket | quote }}
+  - name: RECORD_AWS_DEFAULT_REGION
+    value: {{ index .Values record_aws_default_region | quote }}
+  - name: ENCRYPT_KEY
+    value: {{ index .Values encrypt_key | quote }}
+  - name: ENCRYPT_IV
+    value: {{ index .Values encrypt_iv | quote }}
+  - name: GLOBAL_DB_HOST
+    value: {{ index .Values global_db_host | quote }}
+  - name: GLOBAL_DB_PORT
+    value: {{ index .Values global_db_port | quote }}
+  - name: GLOBAL_DB_DATABASE
+    value: {{ index .Values global_db_database | quote }}
+  - name: GLOBAL_DB_USERNAME
+    value: {{ index .Values global_db_username | quote }}
+  - name: GLOBAL_DB_PASSWORD
+    value: {{ index .Values global_db_password | quote }}
+  - name: PUBLIC_RABBITMQ_HOST
+    value: {{ index .Values public_rabbitmq_host | quote }}
+  - name: PUBLIC_RABBITMQ_PORT
+    value: {{ index .Values public_rabbitmq_port | quote }}
+  - name: PUBLIC_RABBITMQ_USERNAME
+    value: {{ index .Values public_rabbitmq_username | quote }}
+  - name: PUBLIC_RABBITMQ_PASSWORD
+    value: {{ index .Values public_rabbitmq_password | quote }}
+  - name: APPROVALS_QUEUE
+    value: {{ index .Values approvals_queue | quote }}
+  - name: EXCLUDE_THROTTLING_IP
+    value: {{ index .Values exclude_throttling_ip | quote }}
+  - name: HOST_SUPPORTED
+    value: {{ index .Values host_supported | quote }}
+  - name: SG_NAME
+    value: {{ index .Values sg_name | quote }}
+  - name: EU_NAME
+    value: {{ index .Values eu_name | quote }}
+  - name: IN_NAME
+    value: {{ index .Values in_name | quote }}
+  - name: RABBITMQ_HOST
+    value: {{ index .Values rabbitmq_host | quote }}
+  - name: RABBITMQ_PORT
+    value: {{ index .Values rabbitmq_port | quote }}
+  - name: RABBITMQ_USERNAME
+    value: {{ index .Values rabbitmq_username | quote }}
+  - name: RABBITMQ_PASSWORD
+    value: {{ index .Values rabbitmq_password | quote }}
+  - name: ACTIVITY_LOG_QUEUE
+    value: {{ index .Values activity_log_queue | quote }}
+  - name: KFLOW_URL
+    value: {{ index .Values kflow_url | quote }}
+  - name: KALEYRA_GLOBAL_CALLBACK_URL
+    value: {{ index .Values kaleyra_global_callback_url | quote }}
+  - name: CALLBACK_URL
+    value: {{ index .Values callback_url | quote }}
+  - name: SCHEDULE_MIN_LIMIT
+    value: {{ index .Values schedule_min_limit | quote }}
+
+#Note Some Changes are required.
