@@ -1,25 +1,7 @@
 global:
   app_url: stage-console.smsinfini.com
   login_cookie_domain: .smsinfini.com
-  
-  app_debug: true
-  app_log_level: debug
-  app_name: Lumen
-  app_env: qa
-  app_timezone: UTC
-
-  #voice_throttle_limit: 5
-  schedule_min_limit : 15
-  exclude_throttling_ip: 13.233.203.188,15.207.179.204
-  host_supported: SG,EU,IN
-  sg_name: Singapore
-  eu_name: Europe
-  in_name: India
-
-  crm_enable_env: enable
-  default_pod: SG
-  current_pod: SG
-
+ 
 cluster-configs:
   namespaces:
     create: true
@@ -130,7 +112,7 @@ cert-manager:
   namespace: core
   email: "gajendran.g@ext.kaleyra.com"
 
-hexa-api:
+api-service:
   replicas: 1
   images:
     - 
@@ -140,7 +122,25 @@ hexa-api:
   log_slack_webhook_url:
   trace_log_path: /code/storage/logs/logs-hexa-api.log
   internal_log_time_track: 1
+  
   app_log_filesize: 10mb
+  app_debug: true
+  app_log_level: debug
+  app_name: Lumen
+  app_env: qa
+  app_timezone: UTC
+
+  #voice_throttle_limit: 5
+  schedule_min_limit : 15
+  exclude_throttling_ip: 13.233.203.188,15.207.179.204
+  host_supported: SG,EU,IN
+  sg_name: Singapore
+  eu_name: Europe
+  in_name: India
+
+  crm_enable_env: enable
+  default_pod: SG
+  current_pod: SG
   
 bills:
   replicas: 2
