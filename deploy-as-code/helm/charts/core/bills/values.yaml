@@ -3,31 +3,17 @@ labels:
   app: "bills"
   group: "core"
 
-# Ingress Configs
-ingress:
-  enabled: true
-  context: "bills"
-  ip-whitelist: "0.0.0.0/0"
-  additionalAnnotations: | 
-    nginx.ingress.kubernetes.io/whitelist-source-range: {{ index .Values "ingress" "ip-whitelist" | quote }}
-
-# Init Containers Configs
-initContainers:
-  dbMigration:
-    enabled: true
-    schemaTable: "bills-db"
-    image:
-      repository: "bills-db"
 
 # Container Configs
 image:
   repository: "bills"
   tag: "2.0"
-replicas: "1"
-appType: "java-spring"
+replicas: 1
 app_log_level: info
 log_level: false
-heap: "-Xmx192m -Xms192m"
-java-args: ""
+
+extraVolumeMounts: |
+  - mountPath: /mnt/hexa-nfs/
+    name: hexa-nfs
 
 # Additional Container Envs

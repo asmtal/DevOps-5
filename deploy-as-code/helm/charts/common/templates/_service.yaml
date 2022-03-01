@@ -11,9 +11,6 @@ metadata:
     prometheus.io/port: {{ .Values.metrics.port | quote }}
     prometheus.io/scrape: "true"  
 {{- end }}
-{{- if .Values.ingress.zuul }} 
-    zuul/route-path: {{ .Values.ingress.context }}
-{{- end }}
 {{- if and .Values.service .Values.service.additionalAnnotations}}                                   
   {{- tpl  .Values.service.additionalAnnotations . | nindent 4 }}
 {{- end }} 
