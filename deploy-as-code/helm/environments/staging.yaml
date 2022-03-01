@@ -105,8 +105,8 @@ nginx-ingress:
   ssl-ecdh-curve: "X25519:prime256v1:secp521r1:secp384r1"
   controller:
     image:
-      repository: gajentechm/nginx-ingress-controller
-      tag: "0.26.1"
+        repository: gajentechm/nginx-ingress-controller
+        tag: "0.26.1"
 
 cert-manager:
   namespace: core
@@ -115,7 +115,8 @@ cert-manager:
 api-service:
   replicas: 1
   images:
-    - 
+      repository: gajentechm/nginx-ingress-controller
+      tag: "0.26.1"
   db_migration_image:
   # log
   log_channel: stack
@@ -145,6 +146,7 @@ api-service:
 bills:
   replicas: 2
   images:
-    - 
+      repository: gajentechm/nginx-ingress-controller
+      tag: "0.26.1"
   app_log_filesize: 100mb
   app_log_level: debug  

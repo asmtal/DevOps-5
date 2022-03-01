@@ -12,13 +12,15 @@ spec:
 {{- if .Capabilities.APIVersions.Has "apps/v1" }}
   selector:
     matchLabels:
-      app: {{ .Values.appName  . | nindent 6 }}   
+      {{- include "common.labels" . | nindent 6 }} 
+      app: {{ template "common.name" . | nindent 6 }}   
 {{- end }}
   replicas: {{ .Values.replicas }}
   template:
     metadata:  
       labels:
-        app: {{ .Values.appName  . | nindent 8 }}            
+      {{- include "common.labels" . | nindent 8 }}
+      app: {{ template "common.name" . | nindent 8 }}            
     spec:
     {{- if .Values.pvc.mountHexaNFS "true" }}
       volumes:  
