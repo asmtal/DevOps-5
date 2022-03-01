@@ -1,0 +1,6 @@
+FROM 167578521290.dkr.ecr.ap-south-1.amazonaws.com/kcloud:alpine-php7.2-common
+RUN mkdir /code
+ADD ./${module} /code
+RUN chmod -R 777 /code/bootstrap
+RUN chmod -R 777 /code/storage
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
