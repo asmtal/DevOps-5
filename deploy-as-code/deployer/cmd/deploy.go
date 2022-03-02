@@ -16,7 +16,8 @@ limitations under the License.
 package cmd
 
 import (
-	"github.com/TechMindsDev/DevOps/tree/master/deploy-as-code/deployer/pkg/cmd/deployer/pkg/cmd/deployer"
+	"deployer/pkg/cmd/deployer"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
