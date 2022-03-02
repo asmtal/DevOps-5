@@ -1,4 +1,0 @@
-FROM 167578521290.dkr.ecr.ap-south-1.amazonaws.com/kcloud:alpine-golang1.17.7-common
-MAINTAINER nikita.hakari
-ADD ./${module} /code
-RUN cd /code && ${cmd}

@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare name/value pairs to be passed into your templates.
 global:
-    containerRegistry: 167578521290.dkr.ecr.ap-south-1.amazonaws.com/kcloud
+    containerRegistry: 167578521290.dkr.ecr.ap-south-1.amazonaws.com
 
 namespace: kaleyra
 httpPort: 8080

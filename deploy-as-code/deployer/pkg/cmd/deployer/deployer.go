@@ -106,7 +106,6 @@ func deployCrds(serviceChartDirectory string) {
 		out := execCommandRaw(applyCrds, serviceChartDirectory, false)
 		log.Println(out.String())
 	}
-
 }
 
 func getImageTagFromCluster(service string) (tag string) {
@@ -163,15 +162,11 @@ func deployClusterConfigs(index map[string]string, helmDir string, envOverrideFi
 }
 
 func getDockerComponents(image string) (repository string, tag string) {
-	image = strings.Trim(strings.Replace(image, "-db:", ":", 1), " ")
-	components := strings.Split(image, ":")
+	repository = strings.TrimRight(image, ":")
+	image = strings.TrimLeft(image, ":")
+	tag = strings.TrimLeft(image, "_")
 
-	if len(components) == 2 {
-		tag = components[1]
-	}
-
-	domainComponents := strings.Split(components[0], "/")
-	repository = domainComponents[len(domainComponents)-1]
+	image = strings.TrimRight(image, "_")
 
 	return
 }

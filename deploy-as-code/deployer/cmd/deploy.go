@@ -16,8 +16,6 @@ limitations under the License.
 package cmd
 
 import (
-	"errors"
-
 	"github.com/TechMindsDev/DevOps/tree/master/deploy-as-code/deployer/pkg/cmd/deployer/pkg/cmd/deployer"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -37,11 +35,11 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 
 	PreRunE: func(cmd *cobra.Command, args []string) error {
-		if options.DesiredProduct == "" && len(args) < 1 {
-			return errors.New("Image Deploy: At least require one product version/module to deploy")
-		}
+		// if options.DesiredProduct == "" && len(args) < 1 {
+		// 	return errors.New("Image Deploy: At least require one product version/module to deploy")
+		// }
 
-		if options.DesiredProduct == "" && len(args) >= 1 {
+		if options.Images == "" && len(args) >= 1 {
 			options.Images = args[0]
 		}
 
